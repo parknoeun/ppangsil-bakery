@@ -122,6 +122,85 @@
     });
   }
 
+  // 메뉴 사진이 옆으로 천천히 흐름. 손으로 밀면 멈췄다가 3초 뒤 다시 흐르고, 마우스를 올리면 멈춤
+  function setupCarousel() {
+    var viewport = document.querySelector('[data-carousel]');
+    if (!viewport) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var track = viewport.querySelector('.menu-carousel__track');
+    var originals = Array.prototype.slice.call(track.children);
+    if (originals.length === 0) return;
+
+    // 끝없이 이어지도록 한 벌 복제 (스크린리더·탭 이동에서는 제외)
+    originals.forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      Array.prototype.forEach.call(clone.querySelectorAll('a'), function (a) { a.tabIndex = -1; });
+      track.appendChild(clone);
+    });
+
+    var SPEED = 28;          // 초당 px
+    var RESUME_DELAY = 3000; // 손을 뗀 뒤 다시 흐르기까지
+    var loopWidth = 0;       // 원본 한 벌의 폭 (복제본 첫 칸까지의 거리)
+    var pos = 1;
+    var last = 0;
+    var hovering = false;
+    var focused = false;
+    var onScreen = true;
+    var resumeAt = 0;
+
+    function measure() {
+      loopWidth = track.children[originals.length].offsetLeft - originals[0].offsetLeft;
+    }
+
+    // 스크롤 위치를 [1, loopWidth + 1) 안으로 되돌림. 원본과 복제본이 같아 보여서 이음매가 안 보임
+    function wrap(x) {
+      if (x < 1) return x + loopWidth;
+      if (x >= loopWidth + 1) return x - loopWidth;
+      return x;
+    }
+
+    function holdFor(ms) { resumeAt = performance.now() + ms; }
+
+    function tick(now) {
+      var dt = last ? Math.min(now - last, 100) : 0;
+      last = now;
+      if (loopWidth > 0 && !hovering && !focused && onScreen && now >= resumeAt) {
+        pos = wrap(pos + SPEED * dt / 1000);
+        viewport.scrollLeft = pos;
+      } else {
+        pos = viewport.scrollLeft;
+      }
+      window.requestAnimationFrame(tick);
+    }
+
+    viewport.addEventListener('scroll', function () {
+      if (loopWidth <= 0) return;
+      var x = viewport.scrollLeft;
+      var wrapped = wrap(x);
+      if (wrapped !== x) viewport.scrollLeft = wrapped;
+    }, { passive: true });
+
+    viewport.addEventListener('touchstart', function () { holdFor(Infinity); }, { passive: true });
+    viewport.addEventListener('touchend', function () { holdFor(RESUME_DELAY); }, { passive: true });
+    viewport.addEventListener('touchcancel', function () { holdFor(RESUME_DELAY); }, { passive: true });
+    viewport.addEventListener('wheel', function () { holdFor(RESUME_DELAY); }, { passive: true });
+    viewport.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hovering = true; });
+    viewport.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hovering = false; });
+    viewport.addEventListener('focusin', function () { focused = true; });
+    viewport.addEventListener('focusout', function () { focused = false; });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) { onScreen = entries[0].isIntersecting; }).observe(viewport);
+    }
+    window.addEventListener('resize', measure);
+
+    measure();
+    viewport.scrollLeft = pos;
+    window.requestAnimationFrame(tick);
+  }
+
   function setupReveal() {
     if (!('IntersectionObserver' in window)) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -147,5 +226,6 @@
   render();
   setInterval(render, 60 * 1000);
   setupCopyAddress();
+  setupCarousel();
   setupReveal();
 })();
