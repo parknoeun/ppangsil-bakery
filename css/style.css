@@ -46,6 +46,7 @@ a { color: inherit; }
 :focus-visible { outline: 3px solid var(--crust); outline-offset: 3px; border-radius: 6px; }
 
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.nowrap { white-space: nowrap; }
 
 .container {
   width: 100%;
