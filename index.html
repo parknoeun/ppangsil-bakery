@@ -62,6 +62,13 @@
     </symbol>
   </svg>
 
+  <!-- ① 공지 띠: data-show-until 날짜가 지나면 자동으로 숨김 -->
+  <aside class="notice-bar" data-show-until="2026-09-25" aria-label="공지">
+    <a class="notice-bar__link" href="#order">
+      <span aria-hidden="true">🌕</span> 추석 당일(9/25 금) 하루 쉬어가요 · 명절 선물세트 사전예약 중 <span aria-hidden="true">→</span>
+    </a>
+  </aside>
+
   <header class="site-header">
     <div class="container site-header__inner">
       <a class="brand" href="#top" aria-label="빵실빵실 베이커리 맨 위로">
@@ -95,6 +102,37 @@
             <a class="btn btn--ghost" href="#location"><span aria-hidden="true">📍</span> 길찾기</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ⑥ 가게 이야기 -->
+    <section class="section section--story" id="story" aria-labelledby="story-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">OUR STORY</p>
+          <h2 class="section-title" id="story-title">빵친자가 굽는 동네 빵집</h2>
+          <p class="section-lead">20년 넘게 빵을 구워 온 빵친자가<br>2026년 8월 13일, 태전동에 문을 열었어요</p>
+        </div>
+        <ul class="story-grid">
+          <li class="story-card">
+            <span class="story-card__icon" aria-hidden="true">🌙</span>
+            <h3 class="story-card__title">매일 새벽부터</h3>
+            <p class="story-card__text">맛있는 빵을 위해 매일 새벽부터 직접 만들고 구워요</p>
+          </li>
+          <li class="story-card">
+            <span class="story-card__icon" aria-hidden="true">🍞</span>
+            <h3 class="story-card__title">당일생산, 당일판매</h3>
+            <p class="story-card__text">당일 생산, 당일 판매를 원칙으로 그날 구운 빵은 그날 팔아요</p>
+          </li>
+          <li class="story-card">
+            <span class="story-card__icon" aria-hidden="true">🤲</span>
+            <h3 class="story-card__title">손으로 직접</h3>
+            <p class="story-card__text">직접 쑨 팥, 수제 버터크림, 수제 썬드라이 토마토를 써요</p>
+          </li>
+        </ul>
+        <p class="story-more">
+          <a class="btn btn--ghost" href="https://m.place.naver.com/restaurant/2071676973/review/visitor" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> 네이버에서 손님 후기 보기</a>
+        </p>
       </div>
     </section>
 
@@ -146,7 +184,10 @@
             </div>
           </li>
         </ul>
-        <p class="menu-more">그 밖의 빵 30종은 <a href="#timetable">빵 나오는 시간</a>에서 확인하세요 →</p>
+        <div class="menu-actions">
+          <a class="btn btn--primary" href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener">전체 메뉴·가격 보기 <small>(네이버)</small></a>
+        </div>
+        <p class="menu-more">빵 30종이 나오는 시간은 <a href="#timetable">빵 나오는 시간</a>에서 확인하세요 →</p>
       </div>
     </section>
 
@@ -168,7 +209,7 @@
               </div>
               <ul class="bread-list">
                 <li>크림치즈모찌</li><li>로띠번</li><li>갈릭치즈토스트</li><li>에그타르트</li>
-                <li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐소보로</li>
+                <li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐 소보로빵</li>
                 <li>크로크무슈</li><li>소세지피자빵</li><li>밤식빵</li><li>모닝빵</li>
                 <li>감자모닝빵</li><li>초코모닝빵</li><li>초코식빵</li><li>팥빵</li>
               </ul>
@@ -197,7 +238,7 @@
                 <span class="timeline__badge" data-bake-badge hidden></span>
               </div>
               <ul class="bread-list">
-                <li>바게트</li><li>명란바게트</li><li>우유크림소금빵</li><li>초코소라빵</li>
+                <li>바게트</li><li>명란바게트</li><li>우유크림소금번</li><li>초코소라빵</li>
               </ul>
             </li>
             <li class="timeline__row" data-start="11:00">
@@ -275,9 +316,14 @@
         <div class="order-banner">
           <img class="order-banner__photo" src="images/menu-tuile.jpg" alt="" width="600" height="800" loading="lazy">
           <div class="order-banner__body">
-            <p class="eyebrow">GIFT &amp; GROUP ORDER</p>
-            <h2 class="order-banner__title" id="order-title">선물·단체주문</h2>
-            <p class="order-banner__text">선물·단체주문은 인스타그램 DM으로 편하게 물어봐 주세요</p>
+            <p class="eyebrow">GIFT SET</p>
+            <p class="order-banner__tag" data-show-until="2026-09-24">🌕 추석 선물세트 사전예약 중</p>
+            <h2 class="order-banner__title" id="order-title">튀일 선물세트</h2>
+            <p class="order-banner__text">고소하고 바삭한 수제 튀일, 5가지 맛 중에 마음 가는 대로 골라 담아요</p>
+            <ul class="flavor-list" aria-label="튀일 맛 종류">
+              <li>아몬드</li><li>코코넛</li><li>땅콩</li><li>흑임자</li><li>해바라기씨</li>
+            </ul>
+            <p class="order-banner__text order-banner__text--small">답례품·선물·대량 주문은 인스타그램 DM으로 편하게 물어봐 주세요</p>
             <a class="btn btn--primary" href="https://ig.me/m/ppangsil_bakery" target="_blank" rel="noopener"><span aria-hidden="true">💌</span> DM 보내기</a>
           </div>
         </div>
@@ -304,10 +350,19 @@
               </div>
               <div class="info-list__row"><dt>찾아오기</dt><dd>태전동 KFC 옆 건물</dd></div>
               <div class="info-list__row"><dt>주차</dt><dd>건물 뒤 주차장</dd></div>
-              <div class="info-list__row"><dt>영업시간</dt><dd>매일 08:00~21:00</dd></div>
+              <div class="info-list__row">
+                <dt>영업시간</dt>
+                <dd>매일 08:00~21:00<small class="info-list__note">빵이 일찍 다 팔리면 조기 마감할 수 있어요</small></dd>
+              </div>
+              <!-- 휴무일: data-closed-date에 날짜를 적으면 그날은 "오늘은 쉬어가요"로 표시 -->
+              <div class="info-list__row" data-show-until="2026-09-25">
+                <dt>휴무</dt>
+                <dd><span data-closed-date="2026-09-25">9월 25일(금) 추석 당일</span></dd>
+              </div>
+              <div class="info-list__row"><dt>이용</dt><dd>포장 · 예약 · 간편결제 · 주차</dd></div>
               <div class="info-list__row"><dt>전화</dt><dd><a href="tel:010-5528-6149">010-5528-6149</a></dd></div>
             </dl>
-            <p class="location__notice">임시휴무·품절 소식은 <a href="https://www.instagram.com/ppangsil_bakery" target="_blank" rel="noopener">인스타그램</a>에서 알려드려요</p>
+            <p class="location__notice">임시휴무·품절·조기마감 소식은 <a href="https://www.instagram.com/ppangsil_bakery" target="_blank" rel="noopener">인스타그램</a>에서 알려드려요</p>
             <div class="location__maps">
               <a class="btn btn--ghost" href="https://map.naver.com/p/entry/place/2071676973" target="_blank" rel="noopener">네이버 지도</a>
               <a class="btn btn--ghost" href="https://map.kakao.com/link/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EA%B4%91%EC%A3%BC%EC%8B%9C%20%ED%83%9C%EB%B4%89%EB%A1%9C%20145-3" target="_blank" rel="noopener">카카오맵</a>

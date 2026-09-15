@@ -23,14 +23,34 @@ test('toMinutes', () => {
 
 test('parseSeoulTime + seoulClock', () => {
   const d = S.parseSeoulTime('2026-09-01T11:30');
-  assert.deepEqual(S.seoulClock(d), { day: 1, minutes: 690 });
+  assert.deepEqual(S.seoulClock(d), { date: '2026-09-01', day: 1, minutes: 690 });
   assert.equal(S.parseSeoulTime('2026-09-01 11:30'), null);
   assert.equal(S.parseSeoulTime(''), null);
   assert.equal(S.parseSeoulTime(null), null);
 });
 
 test('seoulClock은 UTC 날짜를 한국 시간으로 바꾼다', () => {
-  assert.deepEqual(S.seoulClock(new Date('2026-09-01T15:30:00Z')), { day: 2, minutes: 30 });
+  assert.deepEqual(S.seoulClock(new Date('2026-09-01T15:30:00Z')), { date: '2026-09-02', day: 2, minutes: 30 });
+  assert.deepEqual(S.seoulClock(new Date('2026-12-31T15:05:00Z')), { date: '2027-01-01', day: 1, minutes: 5 });
+});
+
+test('휴무일에는 영업 상태가 holiday', () => {
+  assert.equal(S.storeStatus(720, true), 'holiday');
+  assert.equal(S.storeStatus(450, true), 'holiday');
+  assert.equal(S.storeStatus(720, false), 'open');
+});
+
+test('휴무일에는 빵 시간·혜택 배지가 없다', () => {
+  assert.deepEqual(S.bakeHighlights(575, BATCHES, true), { labels: [null, null, null, null, null], allDone: false });
+  assert.deepEqual(S.todayBenefits(2, 720, true), { coupon: false, lunch: false });
+  assert.deepEqual(S.todayBenefits(15, 720, true), { coupon: false, lunch: false });
+});
+
+test('isShownUntil: 그 날짜까지 보이고 다음 날부터 숨김', () => {
+  assert.equal(S.isShownUntil('2026-09-15', '2026-09-25'), true);
+  assert.equal(S.isShownUntil('2026-09-25', '2026-09-25'), true);
+  assert.equal(S.isShownUntil('2026-09-26', '2026-09-25'), false);
+  assert.equal(S.isShownUntil('2026-09-26', ''), true);
 });
 
 test('storeStatus 경계값', () => {

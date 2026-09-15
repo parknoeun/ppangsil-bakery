@@ -23,21 +23,33 @@
   function seoulClock(date) {
     var parts = {};
     new Intl.DateTimeFormat('en-US', {
-      timeZone: 'Asia/Seoul', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23'
+      timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: 'numeric', minute: 'numeric', hourCycle: 'h23'
     }).formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
-    return { day: Number(parts.day), minutes: (Number(parts.hour) % 24) * 60 + Number(parts.minute) };
+    return {
+      date: parts.year + '-' + parts.month + '-' + parts.day,
+      day: Number(parts.day),
+      minutes: (Number(parts.hour) % 24) * 60 + Number(parts.minute)
+    };
   }
 
-  function storeStatus(minutes) {
+  // 휴무일(closedToday)이면 'holiday'
+  function storeStatus(minutes, closedToday) {
+    if (closedToday) return 'holiday';
     if (minutes < OPEN) return 'before-open';
     if (minutes >= CLOSE) return 'closed';
     return 'open';
   }
 
-  function bakeHighlights(minutes, batches) {
+  // "YYYY-MM-DD" 문자열끼리 비교. until이 비어 있으면 항상 보임
+  function isShownUntil(today, until) {
+    return !until || today <= until;
+  }
+
+  function bakeHighlights(minutes, batches, closedToday) {
     var labels = batches.map(function () { return null; });
-    var status = storeStatus(minutes);
-    if (batches.length === 0 || status === 'closed') return { labels: labels, allDone: false };
+    var status = storeStatus(minutes, closedToday);
+    if (batches.length === 0 || status === 'closed' || status === 'holiday') return { labels: labels, allDone: false };
 
     if (status === 'before-open') {
       var first = 0;
@@ -67,8 +79,8 @@
     return { labels: labels, allDone: !baking && just === -1 && next === -1 };
   }
 
-  function todayBenefits(day, minutes) {
-    var open = storeStatus(minutes) === 'open';
+  function todayBenefits(day, minutes, closedToday) {
+    var open = storeStatus(minutes, closedToday) === 'open';
     var couponDay = day >= 1 && day <= 3;
     return {
       coupon: open && couponDay,
@@ -83,6 +95,7 @@
     parseSeoulTime: parseSeoulTime,
     seoulClock: seoulClock,
     storeStatus: storeStatus,
+    isShownUntil: isShownUntil,
     bakeHighlights: bakeHighlights,
     todayBenefits: todayBenefits
   };

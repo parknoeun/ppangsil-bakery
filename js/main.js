@@ -20,28 +20,43 @@
     return Math.floor(minutes / 60) + '시' + (m ? ' ' + m + '분' : '');
   }
 
-  function renderStoreStatus(minutes) {
+  // <span data-closed-date="2026-09-25"> 들에 적힌 휴무일 목록
+  function isClosedDate(date) {
+    return Array.prototype.some.call(document.querySelectorAll('[data-closed-date]'), function (el) {
+      return el.getAttribute('data-closed-date') === date;
+    });
+  }
+
+  // data-show-until="2026-09-25" 인 공지는 그 날짜가 지나면 숨김
+  function renderTimedNotices(date) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-show-until]'), function (el) {
+      el.hidden = !S.isShownUntil(date, el.getAttribute('data-show-until'));
+    });
+  }
+
+  function renderStoreStatus(minutes, closedToday) {
     var el = document.querySelector('[data-store-status]');
     if (!el) return;
-    var status = S.storeStatus(minutes);
+    var status = S.storeStatus(minutes, closedToday);
     var text = {
       'open': '지금 영업 중 · ' + hourLabel(S.CLOSE) + '까지',
       'before-open': '오늘 아침 ' + hourLabel(S.OPEN) + '에 문 열어요',
-      'closed': '오늘 영업 끝 · 내일 아침 ' + hourLabel(S.OPEN) + '에 만나요'
+      'closed': '오늘 영업 끝 · 내일 아침 ' + hourLabel(S.OPEN) + '에 만나요',
+      'holiday': '오늘은 쉬어가요 · 내일 아침 ' + hourLabel(S.OPEN) + '에 만나요'
     };
     el.textContent = text[status];
     el.classList.toggle('is-open', status === 'open');
     el.hidden = false;
   }
 
-  function renderBakeBadges(minutes) {
+  function renderBakeBadges(minutes, closedToday) {
     var rows = Array.prototype.slice.call(document.querySelectorAll('.timeline__row[data-start]'));
     var batches = rows.map(function (row) {
       var start = S.toMinutes(row.getAttribute('data-start'));
       var end = row.hasAttribute('data-end') ? S.toMinutes(row.getAttribute('data-end')) : start;
       return { start: start, end: end };
     });
-    var result = S.bakeHighlights(minutes, batches);
+    var result = S.bakeHighlights(minutes, batches, closedToday);
 
     rows.forEach(function (row, i) {
       var label = result.labels[i];
@@ -57,8 +72,8 @@
     if (done) done.hidden = !result.allDone;
   }
 
-  function renderBenefitBadges(day, minutes) {
-    var today = S.todayBenefits(day, minutes);
+  function renderBenefitBadges(day, minutes, closedToday) {
+    var today = S.todayBenefits(day, minutes, closedToday);
     ['coupon', 'lunch'].forEach(function (key) {
       var el = document.querySelector('[data-benefit-badge="' + key + '"]');
       if (el) el.hidden = !today[key];
@@ -67,9 +82,11 @@
 
   function render() {
     var clock = S.seoulClock(currentDate());
-    renderStoreStatus(clock.minutes);
-    renderBakeBadges(clock.minutes);
-    renderBenefitBadges(clock.day, clock.minutes);
+    var closedToday = isClosedDate(clock.date);
+    renderTimedNotices(clock.date);
+    renderStoreStatus(clock.minutes, closedToday);
+    renderBakeBadges(clock.minutes, closedToday);
+    renderBenefitBadges(clock.day, clock.minutes, closedToday);
   }
 
   function setupCopyAddress() {
@@ -110,7 +127,7 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var targets = document.querySelectorAll(
-      '.section-head, .menu-card, .timetable, .benefit, .order-banner, .location__info, .location__map'
+      '.section-head, .story-card, .menu-card, .timetable, .benefit, .order-banner, .location__info, .location__map'
     );
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
