@@ -83,6 +83,11 @@
         <a href="#location">오시는 길</a>
       </nav>
     </div>
+    <!-- 스크롤한 만큼 차오르는 막대 위를 걷는 식빵 (js/main.js setupScrollWalk) -->
+    <div class="scroll-walk" data-scroll-walk aria-hidden="true" hidden>
+      <span class="scroll-walk__bar"></span>
+      <span class="scroll-walk__buddy"><img src="images/character.png" alt="" width="600" height="520"></span>
+    </div>
   </header>
 
   <main id="main">
@@ -411,7 +416,10 @@
   <!-- ⑧ 푸터 -->
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <img class="site-footer__icon" src="images/character.png" alt="" width="600" height="520" loading="lazy">
+      <div class="site-footer__buddy">
+        <img class="site-footer__icon" src="images/character.png" alt="" width="600" height="520" loading="lazy">
+        <p class="site-footer__bubble">또 놀러와요 ♥</p>
+      </div>
       <p class="site-footer__name">♥ 빵실빵실 베이커리 Bakery ♥</p>
       <address class="site-footer__info">
         경기도 광주시 태봉로 145-3 우방상가 101호<br>

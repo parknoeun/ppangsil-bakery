@@ -158,6 +158,44 @@
     buddy.addEventListener('animationend', function () { buddy.classList.remove('is-hopping'); });
   }
 
+  // 헤더 아래선: 스크롤한 만큼 막대가 차오르고 그 위를 식빵이 뒤뚱뒤뚱 걸어감 (위로 올리면 뒤돌아 걸음)
+  function setupScrollWalk() {
+    var walk = document.querySelector('[data-scroll-walk]');
+    if (!walk) return;
+    var bar = walk.querySelector('.scroll-walk__bar');
+    var buddy = walk.querySelector('.scroll-walk__buddy');
+    var lastY = window.scrollY;
+    var facingBack = false;
+    var ticking = false;
+    var stopTimer;
+
+    function update() {
+      ticking = false;
+      var y = window.scrollY;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
+      if (y !== lastY) facingBack = y < lastY;
+      lastY = y;
+      bar.style.transform = 'scaleX(' + progress + ')';
+      buddy.style.transform = 'translateX(' + Math.round(progress * (walk.clientWidth - buddy.offsetWidth)) + 'px)' +
+        (facingBack ? ' scaleX(-1)' : '');
+    }
+
+    window.addEventListener('scroll', function () {
+      walk.classList.add('is-walking');
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(function () { walk.classList.remove('is-walking'); }, 180);
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+
+    walk.hidden = false;
+    update();
+  }
+
   // 빵 나오는 시간 각 행에 김 모양 넣기 (보이는 건 .is-now 행만, CSS)
   function setupSteam() {
     Array.prototype.forEach.call(document.querySelectorAll('.timeline__row'), function (row) {
@@ -274,6 +312,7 @@
   setInterval(render, 60 * 1000);
   setupCopyAddress();
   setupBuddy();
+  setupScrollWalk();
   setupSteam();
   setupCarousel();
   // iOS Safari에서 버튼 :active(말랑 눌림)가 동작하게

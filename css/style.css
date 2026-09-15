@@ -178,6 +178,35 @@ a { color: inherit; }
 @media (max-width: 359px) {
   .site-nav a { padding-inline: 4px; font-size: 0.9rem; }
 }
+
+/* 헤더 아래선: 스크롤한 만큼 차오르고, 그 위를 작은 식빵이 뒤뚱뒤뚱 */
+.scroll-walk {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  pointer-events: none;
+}
+.scroll-walk__bar {
+  position: absolute;
+  inset: 0;
+  background: var(--terracotta);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+.scroll-walk__buddy {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 22px;
+}
+.scroll-walk__buddy img { width: 100%; transform-origin: 50% 100%; }
+.scroll-walk.is-walking .scroll-walk__buddy img { animation: waddle 0.3s ease-in-out infinite alternate; }
+@keyframes waddle {
+  from { transform: rotate(-10deg); }
+  to { transform: translateY(-2px) rotate(10deg); }
+}
 @media (min-width: 720px) {
   .brand__name { display: inline; }
   .site-nav { gap: 4px; }
@@ -1035,7 +1064,39 @@ a { color: inherit; }
 /* ---------- ⑧ 푸터 ---------- */
 .site-footer { padding-block: 44px; background: var(--ink); color: var(--cream); text-align: center; }
 .site-footer__inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.site-footer__icon { width: 72px; }
+/* 흔들흔들 인사하는 캐릭터 + "또 놀러와요 ♥" 말풍선 */
+.site-footer__buddy { position: relative; margin-top: 16px; }
+.site-footer__icon {
+  width: 72px;
+  transform-origin: 50% 90%;
+  animation: wave 3s ease-in-out infinite;
+}
+@keyframes wave {
+  0%, 55%, 100% { transform: rotate(0); }
+  10% { transform: rotate(-12deg); }
+  20% { transform: rotate(10deg); }
+  30% { transform: rotate(-8deg); }
+  40% { transform: rotate(5deg); }
+}
+.site-footer__bubble {
+  position: absolute;
+  top: -14px;
+  left: calc(100% - 4px);
+  padding: 4px 12px;
+  border-radius: 999px 999px 999px 4px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  animation: bubble-bob 3s ease-in-out infinite;
+}
+@keyframes bubble-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
 .site-footer__name { font-family: var(--font-hand); font-weight: 700; font-size: 1.55rem; }
 .site-footer__info { font-style: normal; font-size: 0.95rem; line-height: 1.8; }
 .site-footer a { color: var(--cream); }
