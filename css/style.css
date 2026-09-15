@@ -563,6 +563,20 @@ a { color: inherit; }
   50% { transform: rotate(-3deg); }
 }
 
+.benefit-note {
+  width: fit-content;
+  margin: 28px auto 0;
+  padding: 10px 20px;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  text-align: center;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.benefit-note strong { color: var(--crust); }
+
 /* 쿠폰 */
 .coupon { --ticket-pad: 16px; border: 2px solid var(--line); background: var(--paper); }
 .coupon__when {
