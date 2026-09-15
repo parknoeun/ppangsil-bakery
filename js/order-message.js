@@ -23,15 +23,18 @@
     return parts.join(' ');
   }
 
-  // fields: { type, quantity, flavors[], date, time, note }
+  // fields: { type, pack, quantity, flavors[], date, time, note }
+  // pack은 화면에 적힌 그대로의 구성 이름 (예: "10개입 (19,900원)") — 가격은 HTML에서만 관리
   function buildOrderMessage(fields) {
     var f = fields || {};
     var type = TYPE_LABEL[f.type] ? f.type : 'etc';
+    var pack = String(f.pack || '').trim();
     var quantity = String(f.quantity || '').trim();
     var note = String(f.note || '').trim();
     var pickup = formatPickup(f.date, f.time);
     var lines = ['안녕하세요! 빵실빵실 베이커리 홈페이지 보고 문의드려요 :)', '', '■ 문의 종류: ' + TYPE_LABEL[type]];
 
+    if (type === 'tuile' && pack) lines.push('■ 구성: ' + pack);
     if (type !== 'etc' && quantity) {
       lines.push('■ 수량: ' + (type === 'tuile' && /^\d+$/.test(quantity) ? quantity + '세트' : quantity));
     }

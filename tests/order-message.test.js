@@ -13,14 +13,15 @@ test('formatPickup: 날짜·시간을 한국어로', () => {
   assert.equal(O.formatPickup('', ''), '');
 });
 
-test('튀일 선물세트: 숫자만 쓰면 "세트"를 붙이고 맛을 나열', () => {
+test('튀일 선물세트: 구성, 숫자만 쓰면 "세트"를 붙인 수량, 맛을 나열', () => {
   const msg = O.buildOrderMessage({
-    type: 'tuile', quantity: '10', flavors: ['아몬드', '흑임자'],
+    type: 'tuile', pack: '10개입 (19,900원)', quantity: '10', flavors: ['아몬드', '흑임자'],
     date: '2026-09-20', time: '14:00', note: '답례품이라 리본 포장 부탁드려요',
   });
   assert.equal(msg, [
     HEAD, '',
     '■ 문의 종류: 튀일 선물세트',
+    '■ 구성: 10개입 (19,900원)',
     '■ 수량: 10세트',
     '■ 원하는 맛: 아몬드, 흑임자',
     '■ 받는 날짜: 9월 20일(일) 오후 2시',
@@ -29,9 +30,9 @@ test('튀일 선물세트: 숫자만 쓰면 "세트"를 붙이고 맛을 나열'
   ].join('\n'));
 });
 
-test('빵 단체주문: 수량은 적은 그대로, 맛 줄은 없음', () => {
+test('빵 단체주문: 수량은 적은 그대로, 구성·맛 줄은 없음', () => {
   const msg = O.buildOrderMessage({
-    type: 'bread', quantity: '빵 30개, 5만 원어치', flavors: ['아몬드'], date: '', time: '', note: '',
+    type: 'bread', pack: '5개입 (10,400원)', quantity: '빵 30개, 5만 원어치', flavors: ['아몬드'], date: '', time: '', note: '',
   });
   assert.equal(msg, [HEAD, '', '■ 문의 종류: 빵 단체주문', '■ 수량: 빵 30개, 5만 원어치', '', '감사합니다!'].join('\n'));
 });
@@ -47,6 +48,7 @@ test('튀일인데 수량에 글자가 섞이면 그대로', () => {
   const msg = O.buildOrderMessage({ type: 'tuile', quantity: '10세트 정도', flavors: [], date: '', time: '', note: '' });
   assert.match(msg, /■ 수량: 10세트 정도\n/);
   assert.doesNotMatch(msg, /원하는 맛/);
+  assert.doesNotMatch(msg, /구성/); // 구성을 안 고르면 줄 생략
 });
 
 test('알 수 없는 종류는 기타 문의로', () => {

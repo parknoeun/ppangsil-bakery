@@ -149,11 +149,13 @@
 
     function readFields() {
       var type = form.querySelector('input[name="type"]:checked').value;
+      var pack = form.querySelector('input[name="pack"]:checked');
       var flavors = Array.prototype.filter.call(form.querySelectorAll('input[name="flavors"]'), function (box) {
         return box.checked;
       }).map(function (box) { return box.value; });
       return {
         type: type,
+        pack: pack ? pack.value : '',
         quantity: quantity.value,
         flavors: flavors,
         date: form.elements.date.value,

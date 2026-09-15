@@ -355,6 +355,10 @@
             <p class="order-banner__tag" data-show-until="2026-09-24">🌕 추석 선물세트 사전예약 중</p>
             <h2 class="order-banner__title" id="order-title">튀일 선물세트</h2>
             <p class="order-banner__text">고소하고 바삭한 수제 튀일, 5가지 맛 중에 마음 가는 대로 골라 담아요</p>
+            <ul class="price-options" aria-label="튀일 선물세트 가격">
+              <li class="price-option"><span class="price-option__name">5개입</span><span class="price-option__price">10,400원</span></li>
+              <li class="price-option"><span class="price-option__name">10개입</span><span class="price-option__price">19,900원</span></li>
+            </ul>
             <ul class="flavor-list" aria-label="튀일 맛 종류">
               <li>아몬드</li><li>코코넛</li><li>땅콩</li><li>흑임자</li><li>해바라기씨</li>
             </ul>
@@ -373,10 +377,17 @@
                     <label class="choice"><input type="radio" name="type" value="etc"><span>기타 문의</span></label>
                   </div>
                 </fieldset>
+                <fieldset class="order-helper__field" data-show-for="tuile">
+                  <legend class="order-helper__label">구성</legend>
+                  <div class="choice-row">
+                    <label class="choice"><input type="radio" name="pack" value="5개입 (10,400원)"><span>5개입 · 10,400원</span></label>
+                    <label class="choice"><input type="radio" name="pack" value="10개입 (19,900원)"><span>10개입 · 19,900원</span></label>
+                  </div>
+                </fieldset>
                 <label class="order-helper__field" data-show-for="tuile bread">
                   <span class="order-helper__label">수량</span>
                   <input class="order-helper__input" type="text" name="quantity" autocomplete="off"
-                         data-placeholder-tuile="예: 10 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 10 (세트)">
+                         data-placeholder-tuile="예: 3 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 3 (세트)">
                 </label>
                 <fieldset class="order-helper__field" data-show-for="tuile">
                   <legend class="order-helper__label">원하는 맛 <small>(여러 개 선택)</small></legend>
