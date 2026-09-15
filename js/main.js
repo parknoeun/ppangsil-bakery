@@ -122,6 +122,53 @@
     });
   }
 
+  // 첫 화면 캐릭터: 누르면 폴짝 뛰고 하트·빵이 퐁퐁
+  function setupBuddy() {
+    var buddy = document.querySelector('[data-buddy]');
+    if (!buddy) return;
+    var hint = document.querySelector('[data-buddy-hint]');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var POPS = ['♥', '🍞', '♥', '♥', '🥐', '♥'];
+
+    if (hint && !reduceMotion.matches) hint.hidden = false;
+
+    buddy.addEventListener('click', function () {
+      if (hint) hint.hidden = true;
+      if (reduceMotion.matches) return;
+
+      buddy.classList.remove('is-hopping');
+      void buddy.offsetWidth; // 연달아 눌러도 처음부터 다시 뛰게
+      buddy.classList.add('is-hopping');
+
+      POPS.forEach(function (char, i) {
+        var pop = document.createElement('span');
+        var angle = (-150 + i * 24 + Math.random() * 12) * Math.PI / 180; // 위쪽 부채꼴
+        var dist = 70 + Math.random() * 40;
+        pop.className = 'buddy-pop' + (i % 2 ? ' buddy-pop--alt' : '');
+        pop.setAttribute('aria-hidden', 'true');
+        pop.textContent = char;
+        pop.style.setProperty('--dx', Math.round(Math.cos(angle) * dist) + 'px');
+        pop.style.setProperty('--dy', Math.round(Math.sin(angle) * dist) + 'px');
+        pop.style.setProperty('--rot', Math.round(Math.random() * 60 - 30) + 'deg');
+        buddy.parentNode.appendChild(pop);
+        setTimeout(function () { pop.remove(); }, 1050);
+      });
+    });
+
+    buddy.addEventListener('animationend', function () { buddy.classList.remove('is-hopping'); });
+  }
+
+  // 빵 나오는 시간 각 행에 김 모양 넣기 (보이는 건 .is-now 행만, CSS)
+  function setupSteam() {
+    Array.prototype.forEach.call(document.querySelectorAll('.timeline__row'), function (row) {
+      var steam = document.createElement('span');
+      steam.className = 'steam';
+      steam.setAttribute('aria-hidden', 'true');
+      for (var i = 0; i < 3; i++) steam.appendChild(document.createElement('i'));
+      row.appendChild(steam);
+    });
+  }
+
   // 메뉴 사진이 옆으로 천천히 흐름. 손으로 밀면 멈췄다가 3초 뒤 다시 흐르고, 마우스를 올리면 멈춤
   function setupCarousel() {
     var viewport = document.querySelector('[data-carousel]');
@@ -226,6 +273,10 @@
   render();
   setInterval(render, 60 * 1000);
   setupCopyAddress();
+  setupBuddy();
+  setupSteam();
   setupCarousel();
+  // iOS Safari에서 버튼 :active(말랑 눌림)가 동작하게
+  document.addEventListener('touchstart', function () {}, { passive: true });
   setupReveal();
 })();

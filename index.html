@@ -90,7 +90,11 @@
     <section class="hero" id="top">
       <div class="container hero__inner">
         <div class="hero__art">
-          <img src="images/character.png" alt="종이봉투에 담긴 웃는 식빵 캐릭터" width="600" height="520">
+          <!-- 누르면 폴짝 뛰고 하트가 퐁퐁 (js/main.js setupBuddy) -->
+          <button type="button" class="hero__buddy" data-buddy aria-label="식빵 캐릭터 눌러서 폴짝 뛰게 하기">
+            <img src="images/character.png" alt="" width="600" height="520">
+          </button>
+          <span class="hero__poke" data-buddy-hint aria-hidden="true" hidden>톡 눌러봐요!</span>
         </div>
         <div class="hero__text">
           <p class="eyebrow">FRESH BAKED EVERY DAY</p>
