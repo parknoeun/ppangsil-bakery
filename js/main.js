@@ -341,6 +341,7 @@
       var progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
       if (y !== lastY) facingBack = y < lastY;
       lastY = y;
+
       bar.style.transform = 'scaleX(' + progress + ')';
       buddy.style.transform = 'translateX(' + Math.round(progress * (walk.clientWidth - buddy.offsetWidth)) + 'px)' +
         (facingBack ? ' scaleX(-1)' : '');
