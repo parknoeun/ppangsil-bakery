@@ -43,6 +43,8 @@ h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
+/* 버튼을 빠르게 연속으로 눌러도 두 번 탭 확대가 되지 않게 (두 손가락 확대는 그대로 가능) */
+a, button, input, label, select, summary, textarea, .stepper { touch-action: manipulation; }
 :focus-visible { outline: 3px solid var(--crust); outline-offset: 3px; border-radius: 6px; }
 
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
