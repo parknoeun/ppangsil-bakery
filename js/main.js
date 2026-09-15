@@ -136,6 +136,26 @@
     });
   }
 
+  // 휴대폰에서 인스타그램 링크를 앱으로 열기
+  // - iOS: 새 탭(target=_blank)이면 유니버설 링크가 무시될 수 있어 같은 탭으로 엶
+  // - Android: intent:// 로 인스타 앱을 직접 지정, 앱이 없으면 원래 주소(browser_fallback_url)로
+  function setupInstagramAppLinks() {
+    var ua = navigator.userAgent;
+    var isAndroid = /Android/i.test(ua);
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isAndroid && !isIOS) return;
+
+    var links = document.querySelectorAll('a[href^="https://ig.me/"], a[href^="https://www.instagram.com/"]');
+    Array.prototype.forEach.call(links, function (a) {
+      a.removeAttribute('target');
+      if (isAndroid) {
+        var url = a.getAttribute('href');
+        a.setAttribute('href', 'intent://' + url.replace(/^https:\/\//, '') +
+          '#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=' + encodeURIComponent(url) + ';end');
+      }
+    });
+  }
+
   // ① 단체주문 문의 문구 만들기
   function setupOrderHelper() {
     var helper = document.querySelector('[data-order-helper]');
@@ -456,6 +476,7 @@
   render();
   setInterval(render, 60 * 1000);
   setupCopyAddress();
+  setupInstagramAppLinks();
   setupOrderHelper();
   setupShare();
   setupBuddy();
