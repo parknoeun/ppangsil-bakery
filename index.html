@@ -381,8 +381,8 @@
               <fieldset class="order-helper__field" data-show-for="tuile">
                 <legend class="order-helper__label">구성</legend>
                 <div class="choice-row">
-                  <label class="choice"><input type="radio" name="pack" value="5개입 (10,400원)"><span>5개입 · 10,400원</span></label>
-                  <label class="choice"><input type="radio" name="pack" value="10개입 (19,900원)"><span>10개입 · 19,900원</span></label>
+                  <label class="choice"><input type="radio" name="pack" value="5개입 (10,400원)" data-size="5" checked><span>5개입 · 10,400원</span></label>
+                  <label class="choice"><input type="radio" name="pack" value="10개입 (19,900원)" data-size="10"><span>10개입 · 19,900원</span></label>
                 </div>
               </fieldset>
               <label class="order-helper__field" data-show-for="tuile bread">
@@ -391,14 +391,42 @@
                        data-placeholder-tuile="예: 3 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 3 (세트)">
               </label>
               <fieldset class="order-helper__field" data-show-for="tuile">
-                <legend class="order-helper__label">원하는 맛 <small>(여러 개 선택)</small></legend>
-                <div class="choice-row">
-                  <label class="choice"><input type="checkbox" name="flavors" value="아몬드"><span>아몬드</span></label>
-                  <label class="choice"><input type="checkbox" name="flavors" value="코코넛"><span>코코넛</span></label>
-                  <label class="choice"><input type="checkbox" name="flavors" value="땅콩"><span>땅콩</span></label>
-                  <label class="choice"><input type="checkbox" name="flavors" value="흑임자"><span>흑임자</span></label>
-                  <label class="choice"><input type="checkbox" name="flavors" value="해바라기씨"><span>해바라기씨</span></label>
-                </div>
+                <legend class="order-helper__label">맛 구성 <small>(세트 하나에 담을 개수)</small></legend>
+                <!-- 합계가 구성(data-size)을 넘지 않게 JS가 +/- 버튼을 막음 -->
+                <ul class="flavor-steppers">
+                  <li class="stepper" data-flavor="아몬드">
+                    <span class="stepper__name">아몬드</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="아몬드 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="아몬드 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="코코넛">
+                    <span class="stepper__name">코코넛</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="코코넛 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="코코넛 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="땅콩">
+                    <span class="stepper__name">땅콩</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="땅콩 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="땅콩 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="흑임자">
+                    <span class="stepper__name">흑임자</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="흑임자 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="흑임자 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="해바라기씨">
+                    <span class="stepper__name">해바라기씨</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="해바라기씨 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="해바라기씨 하나 더하기">+</button>
+                  </li>
+                </ul>
+                <p class="flavor-status" data-flavor-status aria-live="polite"></p>
+                <p class="order-helper__hint">여러 세트면 모두 같은 구성으로 담아요. 세트마다 다르게 원하시면 요청사항에 적어주세요.</p>
               </fieldset>
               <div class="order-helper__row">
                 <label class="order-helper__field">

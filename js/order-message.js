@@ -23,7 +23,18 @@
     return parts.join(' ');
   }
 
-  // fields: { type, pack, quantity, flavors[], date, time, note }
+  // [{name:'아몬드', count:2}, ...] -> "■ 맛 구성 (세트당 5개): 아몬드 2개, 코코넛 3개". 고른 게 없으면 ""
+  function flavorLine(flavors, packSize) {
+    var picked = (flavors || []).filter(function (f) { return f && f.count > 0; });
+    if (picked.length === 0) return '';
+    var total = picked.reduce(function (sum, f) { return sum + f.count; }, 0);
+    var line = '■ 맛 구성' + (packSize ? ' (세트당 ' + packSize + '개)' : '') + ': ' +
+      picked.map(function (f) { return f.name + ' ' + f.count + '개'; }).join(', ');
+    if (packSize && total < packSize) line += ' · 나머지 ' + (packSize - total) + '개는 DM으로 상의할게요';
+    return line;
+  }
+
+  // fields: { type, pack, packSize, quantity, flavors[{name,count}], date, time, note }
   // pack은 화면에 적힌 그대로의 구성 이름 (예: "10개입 (19,900원)") — 가격은 HTML에서만 관리
   function buildOrderMessage(fields) {
     var f = fields || {};
@@ -38,9 +49,8 @@
     if (type !== 'etc' && quantity) {
       lines.push('■ 수량: ' + (type === 'tuile' && /^\d+$/.test(quantity) ? quantity + '세트' : quantity));
     }
-    if (type === 'tuile' && f.flavors && f.flavors.length) {
-      lines.push('■ 원하는 맛: ' + f.flavors.join(', '));
-    }
+    var flavors = type === 'tuile' ? flavorLine(f.flavors, pack ? f.packSize : 0) : '';
+    if (flavors) lines.push(flavors);
     if (pickup) lines.push('■ 받는 날짜: ' + pickup);
     if (note) lines.push('■ 요청사항: ' + note);
 

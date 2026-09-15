@@ -145,19 +145,64 @@
     var toast = helper.querySelector('[data-order-toast]');
     var quantity = form.elements.quantity;
 
+    var steppers = Array.prototype.slice.call(form.querySelectorAll('.stepper'));
+    var flavorStatus = form.querySelector('[data-flavor-status]');
+
     form.elements.date.min = S.seoulClock(currentDate()).date;
+
+    function packSize() {
+      var pack = form.querySelector('input[name="pack"]:checked');
+      return pack ? Number(pack.getAttribute('data-size')) : 0;
+    }
+
+    function countOf(stepper) { return Number(stepper.querySelector('[data-count]').textContent); }
+    function setCount(stepper, n) { stepper.querySelector('[data-count]').textContent = n; }
+    function totalCount() { return steppers.reduce(function (sum, s) { return sum + countOf(s); }, 0); }
+
+    // 구성이 작아져서 합계가 넘치면 뒤쪽 맛부터 줄임
+    function clampToPack() {
+      var over = totalCount() - packSize();
+      for (var i = steppers.length - 1; i >= 0 && over > 0; i--) {
+        var take = Math.min(countOf(steppers[i]), over);
+        setCount(steppers[i], countOf(steppers[i]) - take);
+        over -= take;
+      }
+    }
+
+    // +/- 버튼 막기와 "5개 중 3개 골랐어요" 안내
+    function renderSteppers() {
+      var size = packSize();
+      var total = totalCount();
+      steppers.forEach(function (s) {
+        s.querySelector('[data-step="-1"]').disabled = countOf(s) === 0;
+        s.querySelector('[data-step="1"]').disabled = total >= size;
+      });
+      flavorStatus.textContent = total === size
+        ? size + '개 다 골랐어요 ✓'
+        : size + '개 중 ' + total + '개 골랐어요 · ' + (size - total) + '개 더 골라주세요';
+      flavorStatus.classList.toggle('is-done', total === size);
+    }
+
+    steppers.forEach(function (s) {
+      Array.prototype.forEach.call(s.querySelectorAll('[data-step]'), function (btn) {
+        btn.addEventListener('click', function () {
+          var next = countOf(s) + Number(btn.getAttribute('data-step'));
+          if (next < 0 || totalCount() - countOf(s) + next > packSize()) return;
+          setCount(s, next);
+          update();
+        });
+      });
+    });
 
     function readFields() {
       var type = form.querySelector('input[name="type"]:checked').value;
       var pack = form.querySelector('input[name="pack"]:checked');
-      var flavors = Array.prototype.filter.call(form.querySelectorAll('input[name="flavors"]'), function (box) {
-        return box.checked;
-      }).map(function (box) { return box.value; });
       return {
         type: type,
         pack: pack ? pack.value : '',
+        packSize: packSize(),
         quantity: quantity.value,
-        flavors: flavors,
+        flavors: steppers.map(function (s) { return { name: s.getAttribute('data-flavor'), count: countOf(s) }; }),
         date: form.elements.date.value,
         time: form.elements.time.value,
         note: form.elements.note.value
@@ -165,6 +210,8 @@
     }
 
     function update() {
+      clampToPack();
+      renderSteppers();
       var fields = readFields();
       Array.prototype.forEach.call(form.querySelectorAll('[data-show-for]'), function (el) {
         el.hidden = el.getAttribute('data-show-for').split(' ').indexOf(fields.type) === -1;

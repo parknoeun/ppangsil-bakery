@@ -1095,8 +1095,45 @@ textarea.order-helper__input { resize: vertical; }
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .choice input:checked + span { border-color: var(--crust); background: var(--crust); color: var(--cream); }
-.choice input[type="checkbox"]:checked + span::before { content: "✓ "; content: "✓ " / ""; }
 .choice input:focus-visible + span { outline: 3px solid var(--crust); outline-offset: 2px; }
+
+/* 맛별 개수 (− 0 +) */
+.flavor-steppers { display: grid; gap: 8px; }
+@media (min-width: 560px) {
+  .flavor-steppers { grid-template-columns: 1fr 1fr; }
+}
+.stepper {
+  display: grid;
+  grid-template-columns: 1fr 40px 2.2em 40px;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 14px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+}
+.stepper__name { font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+.stepper__count { text-align: center; font-family: var(--font-title); font-size: 1.3rem; color: var(--crust); }
+.stepper__btn {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--crust);
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+}
+.stepper__btn:hover:not(:disabled) { background: var(--line); }
+.stepper__btn:active:not(:disabled) { transform: scale(0.88); transition-duration: 0.08s; }
+.stepper__btn:disabled { opacity: 0.35; cursor: default; }
+.flavor-status { font-size: 0.92rem; font-weight: 700; color: var(--crust); }
+.flavor-status.is-done { color: #2F7A3D; }
+.order-helper__hint { font-size: 0.85rem; color: var(--ink); opacity: 0.85; }
 
 .order-helper__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .order-helper__actions .btn-copy { margin-top: 0; min-height: 44px; }
