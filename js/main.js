@@ -89,36 +89,132 @@
     renderBenefitBadges(clock.day, clock.minutes, closedToday);
   }
 
+  // 안내 문구를 잠깐 보여줬다가 지움
+  function flash(el, message, ms) {
+    if (!el) return;
+    el.textContent = message;
+    clearTimeout(el._flashTimer);
+    el._flashTimer = setTimeout(function () { el.textContent = ''; }, ms);
+  }
+
+  // 옛 방식 복사: el 내용을 선택하고 execCommand. 성공하면 true
+  function copyBySelection(el) {
+    if (!el) return false;
+    if (el.select) {
+      el.focus();
+      el.select();
+    } else {
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+    }
+    try { return document.execCommand('copy'); } catch (e) { return false; }
+  }
+
+  // 클립보드에 복사. 결과(true/false)를 Promise로. 막히면 selectEl을 선택해 둠
+  function copyText(text, selectEl) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return copyBySelection(selectEl); }
+      );
+    }
+    return Promise.resolve(copyBySelection(selectEl));
+  }
+
   function setupCopyAddress() {
     var button = document.querySelector('[data-copy-address]');
     var address = document.querySelector('[data-address]');
     var toast = document.querySelector('[data-copy-toast]');
     if (!button || !address) return;
-    var timer;
-
-    function show(message, ms) {
-      if (!toast) return;
-      toast.textContent = message;
-      clearTimeout(timer);
-      timer = setTimeout(function () { toast.textContent = ''; }, ms);
-    }
-
-    function selectAddress() {
-      var range = document.createRange();
-      range.selectNodeContents(address);
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      show('주소를 선택했어요. 복사해서 쓰세요', 4000);
-    }
 
     button.addEventListener('click', function () {
-      var text = address.textContent.trim();
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(function () { show('복사됐어요', 2000); }, selectAddress);
-      } else {
-        selectAddress();
-      }
+      copyText(address.textContent.trim(), address).then(function (ok) {
+        flash(toast, ok ? '복사됐어요' : '주소를 선택했어요. 복사해서 쓰세요', ok ? 2000 : 4000);
+      });
+    });
+  }
+
+  // ① 단체주문 문의 문구 만들기
+  function setupOrderHelper() {
+    var helper = document.querySelector('[data-order-helper]');
+    if (!helper || !window.OrderMessage) return;
+    var form = helper.querySelector('[data-order-form]');
+    var preview = helper.querySelector('[data-order-preview]');
+    var toast = helper.querySelector('[data-order-toast]');
+    var quantity = form.elements.quantity;
+
+    form.elements.date.min = S.seoulClock(currentDate()).date;
+
+    function readFields() {
+      var type = form.querySelector('input[name="type"]:checked').value;
+      var flavors = Array.prototype.filter.call(form.querySelectorAll('input[name="flavors"]'), function (box) {
+        return box.checked;
+      }).map(function (box) { return box.value; });
+      return {
+        type: type,
+        quantity: quantity.value,
+        flavors: flavors,
+        date: form.elements.date.value,
+        time: form.elements.time.value,
+        note: form.elements.note.value
+      };
+    }
+
+    function update() {
+      var fields = readFields();
+      Array.prototype.forEach.call(form.querySelectorAll('[data-show-for]'), function (el) {
+        el.hidden = el.getAttribute('data-show-for').split(' ').indexOf(fields.type) === -1;
+      });
+      var placeholder = quantity.getAttribute('data-placeholder-' + fields.type);
+      if (placeholder) quantity.placeholder = placeholder;
+      preview.value = window.OrderMessage.buildOrderMessage(fields);
+    }
+
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+
+    // 복사한 뒤 링크 기본 동작으로 DM을 엶 (같은 탭 동작 안에서 복사해야 브라우저가 허용)
+    helper.querySelector('[data-order-send]').addEventListener('click', function () {
+      copyText(preview.value, preview).then(function (ok) {
+        flash(toast, ok ? '복사됐어요! DM 창에 붙여넣기 해서 보내주세요' : '복사가 막혔어요. 미리보기 문구를 길게 눌러 복사해 주세요', 6000);
+      });
+    });
+    helper.querySelector('[data-order-copy]').addEventListener('click', function () {
+      copyText(preview.value, preview).then(function (ok) {
+        flash(toast, ok ? '복사됐어요!' : '복사가 막혔어요. 미리보기 문구를 길게 눌러 복사해 주세요', 4000);
+      });
+    });
+
+    helper.hidden = false;
+    update();
+  }
+
+  // ④ 친구에게 알려주기: 휴대폰 공유 창, 없으면 링크 복사
+  function setupShare() {
+    var buttons = document.querySelectorAll('[data-share]');
+    if (!buttons.length) return;
+    var canonical = document.querySelector('link[rel="canonical"]');
+    var shareData = {
+      title: '빵실빵실 베이커리',
+      text: '태전동 당일생산 빵집 🍞 빵 나오는 시간이랑 할인 정보 여기서 봐!',
+      url: canonical ? canonical.href : window.location.origin + window.location.pathname
+    };
+
+    Array.prototype.forEach.call(buttons, function (button) {
+      var toast = button.parentNode.querySelector('[data-share-toast]');
+      button.addEventListener('click', function () {
+        if (navigator.share) {
+          navigator.share(shareData).catch(function () {}); // 공유 창을 그냥 닫은 경우는 무시
+          return;
+        }
+        copyText(shareData.url, null).then(function (ok) {
+          flash(toast, ok ? '링크가 복사됐어요' : shareData.url, ok ? 2500 : 8000);
+        });
+      });
+      button.hidden = false;
     });
   }
 
@@ -311,6 +407,8 @@
   render();
   setInterval(render, 60 * 1000);
   setupCopyAddress();
+  setupOrderHelper();
+  setupShare();
   setupBuddy();
   setupScrollWalk();
   setupSteam();

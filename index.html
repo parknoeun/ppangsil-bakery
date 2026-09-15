@@ -142,6 +142,8 @@
         </ul>
         <p class="story-more">
           <a class="btn btn--ghost" href="https://m.place.naver.com/restaurant/2071676973/review/visitor" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> 네이버에서 손님 후기 보기</a>
+          <button type="button" class="btn btn--ghost" data-share hidden><span aria-hidden="true">💌</span> 친구에게 알려주기</button>
+          <span class="share-toast" data-share-toast role="status" aria-live="polite"></span>
         </p>
       </div>
     </section>
@@ -358,6 +360,60 @@
             </ul>
             <p class="order-banner__text order-banner__text--small">답례품·선물·대량 주문은 인스타그램 DM으로 편하게 물어봐 주세요</p>
             <a class="btn btn--primary" href="https://ig.me/m/ppangsil_bakery" target="_blank" rel="noopener"><span aria-hidden="true">💌</span> DM 보내기</a>
+
+            <!-- ① 주문 문구 만들기: 입력 내용은 저장·전송하지 않고 문구만 만들어 복사 (js/main.js setupOrderHelper) -->
+            <details class="order-helper" data-order-helper hidden>
+              <summary class="order-helper__toggle"><span aria-hidden="true">✍️</span> 주문 문구 만들기</summary>
+              <form class="order-helper__form" data-order-form>
+                <fieldset class="order-helper__field">
+                  <legend class="order-helper__label">문의 종류</legend>
+                  <div class="choice-row">
+                    <label class="choice"><input type="radio" name="type" value="tuile" checked><span>튀일 선물세트</span></label>
+                    <label class="choice"><input type="radio" name="type" value="bread"><span>빵 단체주문</span></label>
+                    <label class="choice"><input type="radio" name="type" value="etc"><span>기타 문의</span></label>
+                  </div>
+                </fieldset>
+                <label class="order-helper__field" data-show-for="tuile bread">
+                  <span class="order-helper__label">수량</span>
+                  <input class="order-helper__input" type="text" name="quantity" autocomplete="off"
+                         data-placeholder-tuile="예: 10 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 10 (세트)">
+                </label>
+                <fieldset class="order-helper__field" data-show-for="tuile">
+                  <legend class="order-helper__label">원하는 맛 <small>(여러 개 선택)</small></legend>
+                  <div class="choice-row">
+                    <label class="choice"><input type="checkbox" name="flavors" value="아몬드"><span>아몬드</span></label>
+                    <label class="choice"><input type="checkbox" name="flavors" value="코코넛"><span>코코넛</span></label>
+                    <label class="choice"><input type="checkbox" name="flavors" value="땅콩"><span>땅콩</span></label>
+                    <label class="choice"><input type="checkbox" name="flavors" value="흑임자"><span>흑임자</span></label>
+                    <label class="choice"><input type="checkbox" name="flavors" value="해바라기씨"><span>해바라기씨</span></label>
+                  </div>
+                </fieldset>
+                <div class="order-helper__row">
+                  <label class="order-helper__field">
+                    <span class="order-helper__label">받는 날짜</span>
+                    <input class="order-helper__input" type="date" name="date">
+                  </label>
+                  <label class="order-helper__field">
+                    <span class="order-helper__label">받는 시간</span>
+                    <input class="order-helper__input" type="time" name="time" min="08:00" max="21:00">
+                  </label>
+                </div>
+                <label class="order-helper__field">
+                  <span class="order-helper__label">요청사항</span>
+                  <textarea class="order-helper__input" name="note" rows="2" placeholder="예: 답례품이라 리본 포장 부탁드려요"></textarea>
+                </label>
+                <label class="order-helper__field">
+                  <span class="order-helper__label">미리보기</span>
+                  <textarea class="order-helper__preview" data-order-preview rows="9" readonly></textarea>
+                </label>
+                <div class="order-helper__actions">
+                  <a class="btn btn--primary" href="https://ig.me/m/ppangsil_bakery" target="_blank" rel="noopener" data-order-send><span aria-hidden="true">📋</span> 문구 복사하고 DM 열기</a>
+                  <button type="button" class="btn-copy" data-order-copy>문구만 복사</button>
+                </div>
+                <p class="order-helper__toast" data-order-toast role="status" aria-live="polite"></p>
+                <p class="order-helper__privacy">입력한 내용은 어디에도 저장되거나 전송되지 않아요. 복사한 문구를 DM 창에 붙여넣어 보내주세요.</p>
+              </form>
+            </details>
           </div>
         </div>
       </div>
@@ -425,6 +481,10 @@
         경기도 광주시 태봉로 145-3 우방상가 101호<br>
         <a href="tel:010-5528-6149">010-5528-6149</a> · <a href="https://www.instagram.com/ppangsil_bakery" target="_blank" rel="noopener">@ppangsil_bakery</a>
       </address>
+      <p class="site-footer__share">
+        <button type="button" class="share-link" data-share hidden><span aria-hidden="true">💌</span> 친구에게 빵실빵실 알려주기</button>
+        <span class="share-toast share-toast--on-dark" data-share-toast role="status" aria-live="polite"></span>
+      </p>
       <p class="site-footer__copy">© 2026 빵실빵실 베이커리</p>
     </div>
   </footer>
@@ -437,6 +497,7 @@
   </nav>
 
   <script src="js/schedule.js"></script>
+  <script src="js/order-message.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
