@@ -218,7 +218,7 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
 }
 
 /* ---------- ② 첫 화면 ---------- */
-.hero { padding-block: 32px 56px; overflow: hidden; }
+.hero { position: relative; padding-block: 32px 56px; overflow: hidden; }
 .hero__inner { display: grid; gap: 20px; align-items: center; }
 
 .hero__art {
@@ -460,6 +460,70 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   .story-card__title { font-size: 1.5rem; }
   .story-card__text { margin-top: 4px; }
 }
+
+/* ---------- 밤 분위기 (영업 전·후, 휴무일) ---------- */
+.hero__night { position: absolute; inset: 0; pointer-events: none; }
+.hero__moon {
+  position: absolute;
+  top: 4%;
+  right: 5%;
+  width: 72px;
+  height: 72px;
+  color: #F5D68A;
+  filter: drop-shadow(0 0 18px rgba(245, 214, 138, 0.5));
+  animation: moon-glow 5s ease-in-out infinite;
+}
+.hero__star {
+  position: absolute;
+  height: auto;
+  color: #F8F0DA;
+  opacity: 0.3;
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.75) rotate(-8deg); }
+  50% { opacity: 1; transform: scale(1.15) rotate(8deg); }
+}
+@keyframes moon-glow {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: translateY(-5px) rotate(4deg); }
+}
+
+.hero__zzz {
+  position: absolute;
+  top: -14%;
+  right: 16%;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: var(--font-title);
+  color: #F5D68A;
+}
+.hero__zzz i { font-style: normal; animation: zzz 2.4s ease-in-out infinite; }
+.hero__zzz i:nth-child(1) { font-size: 1.1rem; animation-delay: 0s; }
+.hero__zzz i:nth-child(2) { font-size: 1.5rem; animation-delay: 0.5s; }
+.hero__zzz i:nth-child(3) { font-size: 2rem; animation-delay: 1s; }
+@keyframes zzz {
+  0% { opacity: 0; transform: translate(0, 6px); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translate(10px, -22px); }
+}
+
+.is-night .hero { background: linear-gradient(180deg, #2E1A13 0%, #4A2A1E 100%); }
+.is-night .hero .eyebrow { color: #F0B27A; }
+.is-night .hero__title { color: var(--cream); }
+.is-night .hero__lead { color: #EADCC0; }
+.is-night .hero__art::before { background: rgba(248, 240, 218, 0.06); box-shadow: none; }
+.is-night .hero__art img { filter: brightness(0.92); }
+/* 밤 색은 첫 화면 안에서만 (바깥 버튼까지 바뀌면 크림 배경에 크림 글자가 됨) */
+.is-night .hero .status-badge {
+  border-color: rgba(248, 240, 218, 0.35);
+  background: rgba(248, 240, 218, 0.1);
+  color: var(--cream);
+}
+.is-night .hero .btn--ghost { border-color: rgba(248, 240, 218, 0.5); background: transparent; color: var(--cream); }
+.is-night .hero .btn--ghost:hover { background: rgba(248, 240, 218, 0.12); }
+.is-night .hero__poke { background: #F5D68A; color: #3B2118; }
 
 /* ---------- ③ 대표 메뉴 ---------- */
 .menu-grid { display: grid; gap: 22px; }

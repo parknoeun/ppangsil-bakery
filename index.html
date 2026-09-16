@@ -93,6 +93,16 @@
   <main id="main">
     <!-- ② 첫 화면 -->
     <section class="hero" id="top">
+      <!-- 영업 전·후와 휴무일에만 보이는 밤 장식 (js/main.js renderStoreStatus) -->
+      <div class="hero__night" data-night aria-hidden="true" hidden>
+        <svg class="hero__moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 12%; left: 8%; width: 18px; animation-delay: 0s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 26%; left: 22%; width: 12px; animation-delay: 0.8s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 8%; left: 60%; width: 14px; animation-delay: 1.6s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 36%; left: 86%; width: 16px; animation-delay: 0.4s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 52%; left: 6%; width: 13px; animation-delay: 2.2s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+        <svg class="hero__star" viewBox="0 0 24 24" fill="currentColor" style="top: 50%; left: 91%; width: 11px; animation-delay: 1.2s;"><path d="M12 1.5c.6 5.1 1.9 7.4 4.6 8.2 2.7.8 4.6 1.2 5.9 2.3-3.6.6-6.4 1.2-8.1 3-1.6 1.7-2.1 4.6-2.4 7.5-.5-4.2-1.3-6.9-3.2-8.2-1.9-1.4-4.4-1.8-7.3-2.3 4.3-.6 7-1.4 8.5-3.1C11.2 7.4 11.7 4.9 12 1.5z"></path></svg>
+      </div>
       <div class="container hero__inner">
         <div class="hero__art">
           <!-- 누르면 폴짝 뛰고 하트가 퐁퐁 (js/main.js setupBuddy) -->
@@ -100,6 +110,7 @@
             <img src="images/character.png" alt="" width="600" height="520">
           </button>
           <span class="hero__poke" data-buddy-hint aria-hidden="true" hidden>톡 눌러봐요!</span>
+          <span class="hero__zzz" data-night aria-hidden="true" hidden><i>z</i><i>z</i><i>Z</i></span>
         </div>
         <div class="hero__text">
           <p class="eyebrow">FRESH BAKED EVERY DAY</p>

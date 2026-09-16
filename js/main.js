@@ -47,6 +47,13 @@
     el.textContent = text[status];
     el.classList.toggle('is-open', status === 'open');
     el.hidden = false;
+
+    // 영업 중이 아니면 첫 화면을 밤 분위기로 (달·별·zzZ)
+    var night = status !== 'open';
+    document.documentElement.classList.toggle('is-night', night);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-night]'), function (deco) {
+      deco.hidden = !night;
+    });
   }
 
   function renderBakeBadges(minutes, closedToday) {

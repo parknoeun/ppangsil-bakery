@@ -1,0 +1,10 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 794, "h": 1123, "title": "계산대용 A4", "print": "fixed" },
+    { "file": "Window.dc.html", "x": 914, "y": 0, "w": 794, "h": 1123, "title": "창문·유리문용 A4", "print": "fixed" }
+  ],
+  "annotations": [
+    { "id": "print-note", "x": 0, "y": -150, "w": 700, "text": "A4 세로 (210×297mm). QR은 홈페이지 주소로 연결돼요.\n계산대용은 가까이서 읽는 안내, 창문용은 밖에서 멀리 보이는 큰 글씨예요." }
+  ],
+  "launch": { "view": "canvas" }
+}
