@@ -2,7 +2,14 @@
 (function (root) {
   'use strict';
 
-  var TYPE_LABEL = { tuile: '튀일 선물세트', bread: '빵 단체주문', etc: '기타 문의' };
+  var TYPE_LABEL = {
+    tuile: '튀일 선물세트',
+    roll: '롤케이크 선물세트',
+    financier: '휘낭시에 선물세트',
+    bread: '빵 단체주문',
+    etc: '기타 문의'
+  };
+  var SET_TYPES = ['tuile', 'roll', 'financier']; // 구성·맛 개수를 고르는 선물세트
   var WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
   // "2026-09-20", "14:00" -> "9월 20일(일) 오후 2시". 둘 다 비면 ""
@@ -45,11 +52,12 @@
     var pickup = formatPickup(f.date, f.time);
     var lines = ['안녕하세요! 빵실빵실 베이커리 홈페이지 보고 문의드려요 :)', '', '■ 문의 종류: ' + TYPE_LABEL[type]];
 
-    if (type === 'tuile' && pack) lines.push('■ 구성: ' + pack);
+    var isSet = SET_TYPES.indexOf(type) !== -1;
+    if (isSet && pack) lines.push('■ 구성: ' + pack);
     if (type !== 'etc' && quantity) {
-      lines.push('■ 수량: ' + (type === 'tuile' && /^\d+$/.test(quantity) ? quantity + '세트' : quantity));
+      lines.push('■ 수량: ' + (isSet && /^\d+$/.test(quantity) ? quantity + '세트' : quantity));
     }
-    var flavors = type === 'tuile' ? flavorLine(f.flavors, pack ? f.packSize : 0) : '';
+    var flavors = isSet ? flavorLine(f.flavors, f.packSize) : '';
     if (flavors) lines.push(flavors);
     if (pickup) lines.push('■ 받는 날짜: ' + pickup);
     if (note) lines.push('■ 요청사항: ' + note);

@@ -44,6 +44,27 @@ test('맛을 하나도 안 고르면 맛 줄 생략', () => {
   assert.doesNotMatch(msg, /맛 구성/);
 });
 
+test('롤케이크 선물세트: 2개입, 맛 2개', () => {
+  const msg = O.buildOrderMessage({
+    type: 'roll', pack: '2개입 (12,300원)', packSize: 2, quantity: '2',
+    flavors: [{ name: '오레오', count: 1 }, { name: '모카', count: 1 }, { name: '말차', count: 0 }],
+  });
+  assert.match(msg, /■ 문의 종류: 롤케이크 선물세트\n/);
+  assert.match(msg, /■ 구성: 2개입 \(12,300원\)\n/);
+  assert.match(msg, /■ 수량: 2세트\n/);
+  assert.match(msg, /■ 맛 구성 \(세트당 2개\): 오레오 1개, 모카 1개\n/);
+});
+
+test('휘낭시에 선물세트: 5개 고정', () => {
+  const msg = O.buildOrderMessage({
+    type: 'financier', pack: '5개입 (10,400원부터)', packSize: 5, quantity: '1',
+    flavors: [{ name: '무화과', count: 2 }, { name: '솔티드초코', count: 2 }, { name: '플레인', count: 1 }],
+  });
+  assert.match(msg, /■ 문의 종류: 휘낭시에 선물세트\n/);
+  assert.match(msg, /■ 맛 구성 \(세트당 5개\): 무화과 2개, 솔티드초코 2개, 플레인 1개\n/);
+  assert.doesNotMatch(msg, /나머지/);
+});
+
 test('빵 단체주문: 수량은 적은 그대로, 구성·맛 줄은 없음', () => {
   const msg = O.buildOrderMessage({
     type: 'bread', pack: '5개입 (10,400원)', packSize: 5, quantity: '빵 30개, 5만 원어치',

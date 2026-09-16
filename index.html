@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260916b">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -227,6 +227,7 @@
               <li class="menu-slide"><a href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener"><img src="images/menu/red-bean-bread.jpg" alt="" width="480" height="480" loading="lazy"><span>팥빵</span></a></li>
               <li class="menu-slide"><a href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener"><img src="images/menu/laugen-soboro.jpg" alt="" width="480" height="480" loading="lazy"><span>라우겐 소보로빵</span></a></li>
               <li class="menu-slide"><a href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener"><img src="images/menu/roll-gift-set.jpg" alt="" width="480" height="480" loading="lazy"><span>롤케이크 선물세트</span></a></li>
+              <li class="menu-slide"><a href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener"><img src="images/menu/financier-flavors.jpg" alt="" width="480" height="480" loading="lazy"><span>휘낭시에</span></a></li>
               <li class="menu-slide"><a href="https://m.place.naver.com/restaurant/2071676973/menu/list" target="_blank" rel="noopener"><img src="images/menu/financier-set.jpg" alt="" width="480" height="480" loading="lazy"><span>휘낭시에 선물세트</span></a></li>
             </ul>
           </div>
@@ -362,23 +363,67 @@
     <!-- ⑥ 선물·단체주문 -->
     <section class="section section--tight" id="order" aria-labelledby="order-title">
       <div class="container">
-        <div class="order-banner">
-          <img class="order-banner__photo" src="images/menu-tuile.jpg" alt="" width="600" height="800" loading="lazy">
-          <div class="order-banner__body">
-            <p class="eyebrow">GIFT SET</p>
-            <p class="order-banner__tag" data-show-until="2026-09-24">🌕 추석 선물세트 사전예약 중</p>
-            <h2 class="order-banner__title" id="order-title">튀일 선물세트</h2>
-            <p class="order-banner__text">고소하고 바삭한 수제 튀일, 5가지 맛 중에 마음 가는 대로 골라 담아요</p>
-            <ul class="price-options" aria-label="튀일 선물세트 가격">
-              <li class="price-option"><span class="price-option__name">5개입</span><span class="price-option__price">10,400원</span></li>
-              <li class="price-option"><span class="price-option__name">10개입</span><span class="price-option__price">19,900원</span></li>
-            </ul>
-            <ul class="flavor-list" aria-label="튀일 맛 종류">
-              <li>아몬드</li><li>코코넛</li><li>땅콩</li><li>흑임자</li><li>해바라기씨</li>
-            </ul>
-            <p class="order-banner__text order-banner__text--small">답례품·선물·대량 주문은 인스타그램 DM으로 편하게 물어봐 주세요</p>
-            <a class="btn btn--primary" href="https://ig.me/m/ppangsil_bakery" target="_blank" rel="noopener"><span aria-hidden="true">💌</span> DM 보내기</a>
-          </div>
+        <div class="section-head">
+          <p class="eyebrow">GIFT SET</p>
+          <h2 class="section-title" id="order-title">선물세트</h2>
+          <p class="section-lead" data-show-until="2026-09-24">🌕 추석 선물세트 사전예약 중이에요</p>
+        </div>
+
+        <ul class="gift-grid">
+          <li class="gift-card">
+            <div class="gift-card__photo">
+              <img src="images/menu-tuile.jpg" alt="리본으로 포장한 튀일 선물 상자" width="600" height="800" loading="lazy">
+            </div>
+            <div class="gift-card__body">
+              <h3 class="gift-card__name">튀일 선물세트</h3>
+              <ul class="price-options" aria-label="튀일 선물세트 가격">
+                <li class="price-option"><span class="price-option__name">5개입</span><span class="price-option__price">10,400원</span></li>
+                <li class="price-option"><span class="price-option__name">10개입</span><span class="price-option__price">19,900원</span></li>
+              </ul>
+              <p class="gift-card__text">고소하고 바삭한 수제 튀일, 5가지 맛 중에 골라 담아요</p>
+              <ul class="flavor-list" aria-label="튀일 맛 종류">
+                <li>아몬드</li><li>코코넛</li><li>땅콩</li><li>흑임자</li><li>해바라기씨</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gift-card">
+            <div class="gift-card__photo">
+              <img src="images/menu/roll-gift-set.jpg" alt="롤케이크 두 개가 담긴 리본 선물 상자" width="480" height="480" loading="lazy">
+            </div>
+            <div class="gift-card__body">
+              <h3 class="gift-card__name">롤케이크 선물세트</h3>
+              <ul class="price-options" aria-label="롤케이크 선물세트 가격">
+                <li class="price-option"><span class="price-option__name">2개입</span><span class="price-option__price">12,300원</span></li>
+              </ul>
+              <p class="gift-card__text">3가지 롤케이크 중에 두 개를 골라 담아요</p>
+              <ul class="flavor-list" aria-label="롤케이크 종류">
+                <li>오레오</li><li>모카</li><li>말차</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="gift-card">
+            <div class="gift-card__photo">
+              <img src="images/menu/financier-set.jpg" alt="리본으로 포장한 휘낭시에 선물 상자" width="480" height="480" loading="lazy">
+            </div>
+            <div class="gift-card__body">
+              <h3 class="gift-card__name">휘낭시에 선물세트</h3>
+              <ul class="price-options" aria-label="휘낭시에 선물세트 가격">
+                <li class="price-option"><span class="price-option__name">5개입</span><span class="price-option__price">10,400원~</span></li>
+              </ul>
+              <p class="gift-card__text">5개를 골라 담아요. 고른 맛에 따라 가격이 달라지고, 선물 포장비 900원이 더해져요</p>
+              <ul class="flavor-list" aria-label="휘낭시에 맛과 가격">
+                <li>무화과 2,200원</li><li>솔티드초코 2,200원</li><li>플레인 1,900원</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+        <div class="gift-actions">
+          <p class="gift-actions__text">답례품·선물·대량 주문은 인스타그램 DM으로 편하게 물어봐 주세요</p>
+          <a class="btn btn--primary" href="https://ig.me/m/ppangsil_bakery" target="_blank" rel="noopener"><span aria-hidden="true">💌</span> DM 보내기</a>
+        </div>
 
           <!-- ① 주문 문구 만들기: 입력 내용은 저장·전송하지 않고 문구만 만들어 복사. 배너 아래 가로 전체 (js/main.js setupOrderHelper) -->
           <details class="order-helper" data-order-helper hidden>
@@ -388,6 +433,8 @@
                 <legend class="order-helper__label">문의 종류</legend>
                 <div class="choice-row">
                   <label class="choice"><input type="radio" name="type" value="tuile" checked><span>튀일 선물세트</span></label>
+                  <label class="choice"><input type="radio" name="type" value="roll"><span>롤케이크 선물세트</span></label>
+                  <label class="choice"><input type="radio" name="type" value="financier"><span>휘낭시에 선물세트</span></label>
                   <label class="choice"><input type="radio" name="type" value="bread"><span>빵 단체주문</span></label>
                   <label class="choice"><input type="radio" name="type" value="etc"><span>기타 문의</span></label>
                 </div>
@@ -399,14 +446,15 @@
                   <label class="choice"><input type="radio" name="pack" value="10개입 (19,900원)" data-size="10"><span>10개입 · 19,900원</span></label>
                 </div>
               </fieldset>
-              <label class="order-helper__field" data-show-for="tuile bread">
+              <label class="order-helper__field" data-show-for="tuile roll financier bread">
                 <span class="order-helper__label">수량</span>
                 <input class="order-helper__input" type="text" name="quantity" autocomplete="off"
-                       data-placeholder-tuile="예: 3 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 3 (세트)">
+                       data-placeholder-tuile="예: 3 (세트)" data-placeholder-roll="예: 2 (세트)"
+                       data-placeholder-financier="예: 2 (세트)" data-placeholder-bread="예: 빵 30개, 5만 원어치" placeholder="예: 3 (세트)">
               </label>
-              <fieldset class="order-helper__field" data-show-for="tuile">
+              <!-- 세트별 맛 개수. 합계가 세트 크기(튀일은 구성 선택, 롤케이크 2개, 휘낭시에 5개)를 넘지 않게 JS가 막음 -->
+              <fieldset class="order-helper__field" data-show-for="tuile" data-flavor-group="tuile">
                 <legend class="order-helper__label">맛 구성 <small>(세트 하나에 담을 개수)</small></legend>
-                <!-- 합계가 구성(data-size)을 넘지 않게 JS가 +/- 버튼을 막음 -->
                 <ul class="flavor-steppers">
                   <li class="stepper" data-flavor="아몬드">
                     <span class="stepper__name">아몬드</span>
@@ -442,6 +490,56 @@
                 <p class="flavor-status" data-flavor-status aria-live="polite"></p>
                 <p class="order-helper__hint">여러 세트면 모두 같은 구성으로 담아요. 세트마다 다르게 원하시면 요청사항에 적어주세요.</p>
               </fieldset>
+              <fieldset class="order-helper__field" data-show-for="roll" data-flavor-group="roll" data-pack-size="2" data-pack-label="2개입 (12,300원)">
+                <legend class="order-helper__label">맛 구성 <small>(세트 하나에 담을 개수)</small></legend>
+                <ul class="flavor-steppers">
+                  <li class="stepper" data-flavor="오레오">
+                    <span class="stepper__name">오레오</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="오레오 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="오레오 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="모카">
+                    <span class="stepper__name">모카</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="모카 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="모카 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="말차">
+                    <span class="stepper__name">말차</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="말차 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="말차 하나 더하기">+</button>
+                  </li>
+                </ul>
+                <p class="flavor-status" data-flavor-status aria-live="polite"></p>
+                <p class="order-helper__hint">여러 세트면 모두 같은 구성으로 담아요. 세트마다 다르게 원하시면 요청사항에 적어주세요.</p>
+              </fieldset>
+              <fieldset class="order-helper__field" data-show-for="financier" data-flavor-group="financier" data-pack-size="5" data-pack-label="5개입 (10,400원부터)">
+                <legend class="order-helper__label">맛 구성 <small>(세트 하나에 담을 개수)</small></legend>
+                <ul class="flavor-steppers">
+                  <li class="stepper" data-flavor="무화과">
+                    <span class="stepper__name">무화과</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="무화과 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="무화과 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="솔티드초코">
+                    <span class="stepper__name">솔티드초코</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="솔티드초코 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="솔티드초코 하나 더하기">+</button>
+                  </li>
+                  <li class="stepper" data-flavor="플레인">
+                    <span class="stepper__name">플레인</span>
+                    <button type="button" class="stepper__btn" data-step="-1" aria-label="플레인 하나 빼기">−</button>
+                    <span class="stepper__count" data-count>0</span>
+                    <button type="button" class="stepper__btn" data-step="1" aria-label="플레인 하나 더하기">+</button>
+                  </li>
+                </ul>
+                <p class="flavor-status" data-flavor-status aria-live="polite"></p>
+                <p class="order-helper__hint">여러 세트면 모두 같은 구성으로 담아요. 세트마다 다르게 원하시면 요청사항에 적어주세요.</p>
+              </fieldset>
               <div class="order-helper__row">
                 <label class="order-helper__field">
                   <span class="order-helper__label">받는 날짜</span>
@@ -468,7 +566,6 @@
               <p class="order-helper__privacy">입력한 내용은 어디에도 저장되거나 전송되지 않아요. 복사한 문구를 DM 창에 붙여넣어 보내주세요.</p>
             </form>
           </details>
-        </div>
       </div>
     </section>
 
@@ -553,8 +650,8 @@
     <a href="https://www.instagram.com/ppangsil_bakery" target="_blank" rel="noopener"><span aria-hidden="true">📷</span>인스타</a>
   </nav>
 
-  <script src="js/schedule.js"></script>
-  <script src="js/order-message.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/schedule.js?v=20260916b"></script>
+  <script src="js/order-message.js?v=20260916b"></script>
+  <script src="js/main.js?v=20260916b"></script>
 </body>
 </html>

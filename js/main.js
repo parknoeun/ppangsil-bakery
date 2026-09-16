@@ -231,64 +231,97 @@
     var toast = helper.querySelector('[data-order-toast]');
     var quantity = form.elements.quantity;
 
-    var steppers = Array.prototype.slice.call(form.querySelectorAll('.stepper'));
-    var flavorStatus = form.querySelector('[data-flavor-status]');
+    // 세트 종류별 맛 묶음: 튀일(구성에 따라 5·10개), 롤케이크(2개), 휘낭시에(5개)
+    var groups = Array.prototype.map.call(form.querySelectorAll('[data-flavor-group]'), function (el) {
+      return {
+        type: el.getAttribute('data-flavor-group'),
+        size: Number(el.getAttribute('data-pack-size')) || 0, // 0이면 '구성' 라디오에서 읽음
+        label: el.getAttribute('data-pack-label') || '',
+        steppers: Array.prototype.slice.call(el.querySelectorAll('.stepper')),
+        status: el.querySelector('[data-flavor-status]')
+      };
+    });
 
     form.elements.date.min = S.seoulClock(currentDate()).date;
 
-    function packSize() {
+    function currentType() { return form.querySelector('input[name="type"]:checked').value; }
+
+    // 선택한 문의 종류의 맛 묶음 (튀일/롤케이크/휘낭시에). 선물세트가 아니면 null
+    function activeGroup() {
+      for (var i = 0; i < groups.length; i++) {
+        if (groups[i].type === currentType()) return groups[i];
+      }
+      return null;
+    }
+
+    // 세트 하나에 담는 개수: 튀일은 고른 구성, 나머지는 정해진 값
+    function packSize(group) {
+      if (!group) return 0;
+      if (group.size) return group.size;
       var pack = form.querySelector('input[name="pack"]:checked');
       return pack ? Number(pack.getAttribute('data-size')) : 0;
     }
 
+    function packLabel(group) {
+      if (!group) return '';
+      if (group.label) return group.label;
+      var pack = form.querySelector('input[name="pack"]:checked');
+      return pack ? pack.value : '';
+    }
+
     function countOf(stepper) { return Number(stepper.querySelector('[data-count]').textContent); }
     function setCount(stepper, n) { stepper.querySelector('[data-count]').textContent = n; }
-    function totalCount() { return steppers.reduce(function (sum, s) { return sum + countOf(s); }, 0); }
+    function totalCount(group) {
+      return group.steppers.reduce(function (sum, s) { return sum + countOf(s); }, 0);
+    }
 
     // 구성이 작아져서 합계가 넘치면 뒤쪽 맛부터 줄임
-    function clampToPack() {
-      var over = totalCount() - packSize();
-      for (var i = steppers.length - 1; i >= 0 && over > 0; i--) {
-        var take = Math.min(countOf(steppers[i]), over);
-        setCount(steppers[i], countOf(steppers[i]) - take);
+    function clampToPack(group) {
+      var over = totalCount(group) - packSize(group);
+      for (var i = group.steppers.length - 1; i >= 0 && over > 0; i--) {
+        var take = Math.min(countOf(group.steppers[i]), over);
+        setCount(group.steppers[i], countOf(group.steppers[i]) - take);
         over -= take;
       }
     }
 
     // +/- 버튼 막기와 "5개 중 3개 골랐어요" 안내
-    function renderSteppers() {
-      var size = packSize();
-      var total = totalCount();
-      steppers.forEach(function (s) {
+    function renderSteppers(group) {
+      var size = packSize(group);
+      var total = totalCount(group);
+      group.steppers.forEach(function (s) {
         s.querySelector('[data-step="-1"]').disabled = countOf(s) === 0;
         s.querySelector('[data-step="1"]').disabled = total >= size;
       });
-      flavorStatus.textContent = total === size
+      group.status.textContent = total === size
         ? size + '개 다 골랐어요 ✓'
         : size + '개 중 ' + total + '개 골랐어요 · ' + (size - total) + '개 더 골라주세요';
-      flavorStatus.classList.toggle('is-done', total === size);
+      group.status.classList.toggle('is-done', total === size);
     }
 
-    steppers.forEach(function (s) {
-      Array.prototype.forEach.call(s.querySelectorAll('[data-step]'), function (btn) {
-        btn.addEventListener('click', function () {
-          var next = countOf(s) + Number(btn.getAttribute('data-step'));
-          if (next < 0 || totalCount() - countOf(s) + next > packSize()) return;
-          setCount(s, next);
-          update();
+    groups.forEach(function (group) {
+      group.steppers.forEach(function (s) {
+        Array.prototype.forEach.call(s.querySelectorAll('[data-step]'), function (btn) {
+          btn.addEventListener('click', function () {
+            var next = countOf(s) + Number(btn.getAttribute('data-step'));
+            if (next < 0 || totalCount(group) - countOf(s) + next > packSize(group)) return;
+            setCount(s, next);
+            update();
+          });
         });
       });
     });
 
     function readFields() {
-      var type = form.querySelector('input[name="type"]:checked').value;
-      var pack = form.querySelector('input[name="pack"]:checked');
+      var group = activeGroup();
       return {
-        type: type,
-        pack: pack ? pack.value : '',
-        packSize: packSize(),
+        type: currentType(),
+        pack: packLabel(group),
+        packSize: packSize(group),
         quantity: quantity.value,
-        flavors: steppers.map(function (s) { return { name: s.getAttribute('data-flavor'), count: countOf(s) }; }),
+        flavors: group ? group.steppers.map(function (s) {
+          return { name: s.getAttribute('data-flavor'), count: countOf(s) };
+        }) : [],
         date: form.elements.date.value,
         time: form.elements.time.value,
         note: form.elements.note.value
@@ -296,8 +329,11 @@
     }
 
     function update() {
-      clampToPack();
-      renderSteppers();
+      var group = activeGroup();
+      if (group) {
+        clampToPack(group);
+        renderSteppers(group);
+      }
       var fields = readFields();
       Array.prototype.forEach.call(form.querySelectorAll('[data-show-for]'), function (el) {
         el.hidden = el.getAttribute('data-show-for').split(' ').indexOf(fields.type) === -1;
