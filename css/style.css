@@ -237,7 +237,38 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   background: var(--paper);
   box-shadow: 0 0 0 10px rgba(252, 247, 234, 0.5);
 }
-.hero__art img { animation: bob 4s ease-in-out infinite; }
+.hero__art img, .hero__baker { animation: bob 4s ease-in-out infinite; }
+
+/* 히어로 캐릭터: 낮에는 밀대로 반죽 미는 제빵사, 밤에는 이불 덮고 자는 식빵 */
+.hero__baker { display: block; width: 100%; height: auto; }
+.hero__sleeper { display: none; width: 100%; height: auto; }
+.is-night .hero__baker { display: none; }
+.is-night .hero__sleeper { display: block; }
+
+/* 부위별 애니메이션. 미는 방향은 밀대 축(18.7도)의 수직 (-0.32, 0.95) */
+.hero__baker .bk-tool  { animation: bkPush 820ms ease-in-out infinite; }
+.hero__baker .bk-body  { animation: bkLean 820ms ease-in-out infinite; transform-origin: 105px 196px; }
+.hero__baker .bk-dough { animation: bkSquash 820ms ease-in-out infinite; transform-origin: 97px 242px; }
+.hero__baker .bk-marks { animation: bkRoll 820ms ease-in-out infinite; }
+@keyframes bkPush {                 /* 밀대와 두 발 */
+  0%, 100% { transform: translate(2.25px, -6.6px); }
+  50%      { transform: translate(-2.25px, 6.6px); }
+}
+@keyframes bkLean {                 /* 몸통(+모자)은 절반만 따라가며 숙임 */
+  0%, 100% { transform: translate(1.1px, -3.1px) rotate(0.9deg); }
+  50%      { transform: translate(-1.1px, 3.1px) rotate(-1deg); }
+}
+@keyframes bkRoll {                 /* 표면 무늬는 밀대보다 더 많이 = 굴러가는 느낌 */
+  0%, 100% { transform: translate(3.0px, -8.9px); }
+  50%      { transform: translate(-3.0px, 8.9px); }
+}
+@keyframes bkSquash {               /* 반죽이 눌렸다 펴짐 */
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(1.03, 0.955); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__baker, .hero__baker * { animation: none !important; }
+}
 @keyframes bob {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50% { transform: translateY(-8px) rotate(2deg); }
@@ -264,6 +295,16 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   70% { transform: translateY(0) scale(1.08, 0.9); }
   85% { transform: translateY(0) scale(0.97, 1.03); }
   100% { transform: translateY(0) scale(1, 1); }
+}
+
+/* 밤엔 자고 있으니 "톡 눌러봐요!"는 숨기고, 눌러도 뒤척이기만 */
+.is-night .hero__poke { display: none; }
+.hero__buddy.is-turning { animation: turnOver 1.2s ease-in-out; }
+@keyframes turnOver {
+  0%   { transform: rotate(0) translateX(0); }
+  28%  { transform: rotate(-2.6deg) translateX(-5px); }
+  62%  { transform: rotate(1.8deg) translateX(3px); }
+  100% { transform: rotate(0) translateX(0); }
 }
 
 .hero__poke {

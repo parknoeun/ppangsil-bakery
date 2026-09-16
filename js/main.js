@@ -441,6 +441,14 @@
       if (hint) hint.hidden = true;
       if (reduceMotion.matches) return;
 
+      // 밤에는 자고 있으니 깨우지 말고 살짝 뒤척이기만 (하트도 안 띄움)
+      if (document.documentElement.classList.contains('is-night')) {
+        buddy.classList.remove('is-turning');
+        void buddy.offsetWidth;
+        buddy.classList.add('is-turning');
+        return;
+      }
+
       buddy.classList.remove('is-hopping');
       void buddy.offsetWidth; // 연달아 눌러도 처음부터 다시 뛰게
       buddy.classList.add('is-hopping');
@@ -460,7 +468,10 @@
       });
     });
 
-    buddy.addEventListener('animationend', function () { buddy.classList.remove('is-hopping'); });
+    buddy.addEventListener('animationend', function () {
+      buddy.classList.remove('is-hopping');
+      buddy.classList.remove('is-turning');
+    });
   }
 
   // 헤더 아래선: 스크롤한 만큼 막대가 차오르고 그 위를 식빵이 뒤뚱뒤뚱 걸어감 (위로 올리면 뒤돌아 걸음)
