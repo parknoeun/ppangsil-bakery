@@ -1149,7 +1149,9 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
 
 /* 크게 보기 창 */
 .lightbox {
-  width: auto;
+  /* 창을 사진 크기에 맞춤 (auto면 화면 너비만큼 늘어나 사진이 왼쪽에 붙어 보임) */
+  width: fit-content;
+  height: fit-content;
   max-width: 94vw;
   max-height: 92vh;
   padding: 0;
