@@ -1117,8 +1117,76 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   background: var(--paper);
   box-shadow: 0 6px 0 rgba(165, 75, 54, 0.12);
 }
-.gift-card__photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--cream); }
+/* 사진 = 크게 보기 버튼 */
+.gift-card__photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--cream);
+  cursor: zoom-in;
+}
 .gift-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gift-card__zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(248, 240, 218, 0.92);
+  color: var(--crust);
+  box-shadow: 0 2px 8px rgba(110, 58, 40, 0.3);
+  transition: transform 0.2s ease;
+}
+.gift-card__zoom svg { width: 22px; height: 22px; }
+.gift-card__photo:hover .gift-card__zoom { transform: scale(1.12); }
+
+/* 크게 보기 창 */
+.lightbox {
+  width: auto;
+  max-width: 94vw;
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  overflow: visible;
+}
+.lightbox::backdrop { background: rgba(46, 26, 19, 0.82); }
+.lightbox__img {
+  display: block;
+  max-width: 94vw;
+  max-height: 86vh;
+  border: 3px solid var(--cream);
+  border-radius: var(--radius-lg);
+  background: var(--cream);
+}
+.lightbox__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 3px solid var(--cream);
+  border-radius: 50%;
+  background: var(--crust);
+  color: var(--cream);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.lightbox__close svg { width: 22px; height: 22px; }
+.lightbox__close:active { transform: scale(0.92); }
+/* 큰 사진이 떠 있는 동안: 헤더 흐림 효과를 끄고(안 끄면 헤더만 안 어두워짐) 뒤 배경 스크롤 막기 */
+.is-lightbox-open .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.is-lightbox-open body { overflow: hidden; }
 .gift-card__body { display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 22px; }
 .gift-card__name {
   font-family: var(--font-title);

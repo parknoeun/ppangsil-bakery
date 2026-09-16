@@ -163,6 +163,44 @@
     });
   }
 
+  // 선물세트 사진 크게 보기: 누르면 화면 가운데에 큰 사진 (큰 파일은 누를 때만 받음)
+  function setupLightbox() {
+    var dialog = document.querySelector('[data-lightbox]');
+    var buttons = document.querySelectorAll('[data-zoom]');
+    if (!dialog || !buttons.length) return;
+    var img = dialog.querySelector('[data-lightbox-img]');
+
+    function close() {
+      if (dialog.open) dialog.close();
+    }
+
+    Array.prototype.forEach.call(buttons, function (button) {
+      button.addEventListener('click', function () {
+        var src = button.getAttribute('data-zoom');
+        // <dialog>를 못 쓰는 브라우저면 사진을 새 탭으로
+        if (!dialog.showModal) {
+          window.open(src, '_blank', 'noopener');
+          return;
+        }
+        img.src = src;
+        img.alt = button.getAttribute('aria-label').replace(' 크게 보기', '');
+        dialog.showModal();
+        document.documentElement.classList.add('is-lightbox-open');
+      });
+    });
+
+    dialog.querySelector('[data-lightbox-close]').addEventListener('click', close);
+    // 사진 바깥(어두운 배경)을 누르면 닫기
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) close();
+    });
+    // 닫힌 뒤에는 사진을 비워 메모리를 돌려줌 (Esc로 닫을 때도 동작)
+    dialog.addEventListener('close', function () {
+      img.removeAttribute('src');
+      document.documentElement.classList.remove('is-lightbox-open');
+    });
+  }
+
   // 카카오맵: 지도 칸이 화면에 들어올 때만 SDK를 불러온다 (사용량 아끼기)
   // 실패하면(서비스 꺼짐·도메인 미등록·네트워크) 안내 문구를 그대로 두고 카카오맵 버튼으로 보냄
   function setupKakaoMap() {
@@ -581,6 +619,7 @@
   setupCopyAddress();
   setupInstagramAppLinks();
   setupKakaoMap();
+  setupLightbox();
   setupOrderHelper();
   setupShare();
   setupBuddy();

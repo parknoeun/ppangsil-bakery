@@ -253,3 +253,4 @@ bread-homepage/
 - 주문 문구: 종류 5가지(선물세트 3종·빵 단체주문·기타). 맛 묶음은 `data-flavor-group`별로 두고 세트 크기는 튀일=구성 라디오, 롤케이크=2, 휘낭시에=5 (`data-pack-size`/`data-pack-label`)
 - 사진 4:3 크롭이 실제로는 적용되지 않던 문제 수정: `aspect-ratio` 박스 안의 이미지를 `position: absolute; inset: 0`으로 깔아야 원본 비율로 늘어나지 않음 (대표 메뉴 카드도 같이 수정)
 - 배포 직후 캐시 섞임 방지: `css/style.css?v=YYYYMMDDx`, `js/*.js?v=...` — **내용을 바꾸면 이 버전 문자열도 함께 올릴 것**
+- 선물세트 사진 크게 보기: 카드 사진을 버튼으로 바꾸고 돋보기 배지 표시 → `<dialog>`로 가운데에 큰 사진(`images/large/`, 긴 변 1200px). 누를 때만 큰 파일을 받고, 닫으면 src 제거. 닫기는 ✕·배경 클릭·Esc. 열려 있는 동안 `html.is-lightbox-open`으로 헤더 흐림 끄기(안 끄면 헤더만 안 어두워짐)와 배경 스크롤 잠금
