@@ -542,7 +542,17 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   box-shadow: 0 6px 0 rgba(165, 75, 54, 0.12);
 }
 /* 사진은 4:3으로 잘라서 보여줌 (이미지를 absolute로 깔아야 원본 비율로 늘어나지 않음) */
-.menu-card__photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--cream); }
+.menu-card__photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--cream);
+  cursor: zoom-in;
+}
 .menu-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .menu-card__tag {
   position: absolute;
@@ -1130,7 +1140,8 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   cursor: zoom-in;
 }
 .gift-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gift-card__zoom {
+/* 사진 위 돋보기 배지 (대표 메뉴·선물세트 공용) */
+.photo-zoom {
   position: absolute;
   right: 12px;
   bottom: 12px;
@@ -1144,8 +1155,9 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
   box-shadow: 0 2px 8px rgba(110, 58, 40, 0.3);
   transition: transform 0.2s ease;
 }
-.gift-card__zoom svg { width: 22px; height: 22px; }
-.gift-card__photo:hover .gift-card__zoom { transform: scale(1.12); }
+.photo-zoom svg { width: 22px; height: 22px; }
+.gift-card__photo:hover .photo-zoom,
+.menu-card__photo:hover .photo-zoom { transform: scale(1.12); }
 
 /* 크게 보기 창 */
 .lightbox {

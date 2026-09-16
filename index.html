@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20260916e">
+  <link rel="stylesheet" href="css/style.css?v=20260916f">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -168,10 +168,11 @@
         </div>
         <ul class="menu-grid">
           <li class="menu-card">
-            <div class="menu-card__photo">
+            <button type="button" class="menu-card__photo" data-zoom="images/large/country-bread.jpg" aria-label="프랑스시골빵 사진 크게 보기">
               <img src="images/menu-country-bread.jpg" alt="밀가루를 뿌려 구운 둥근 프랑스시골빵" width="600" height="800" loading="lazy">
               <span class="menu-card__tag">시그니처</span>
-            </div>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+            </button>
             <div class="menu-card__body">
               <div class="menu-card__head">
                 <h3 class="menu-card__name">프랑스시골빵</h3>
@@ -182,9 +183,10 @@
             </div>
           </li>
           <li class="menu-card">
-            <div class="menu-card__photo">
+            <button type="button" class="menu-card__photo" data-zoom="images/large/mocha-roll.jpg" aria-label="모카롤케이크 사진 크게 보기">
               <img src="images/menu-mocha-roll.jpg" alt="모카 크림이 말려 들어간 롤케이크 단면" width="600" height="800" loading="lazy">
-            </div>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+            </button>
             <div class="menu-card__body">
               <div class="menu-card__head">
                 <h3 class="menu-card__name">모카롤케이크</h3>
@@ -194,10 +196,11 @@
             </div>
           </li>
           <li class="menu-card">
-            <div class="menu-card__photo">
+            <button type="button" class="menu-card__photo" data-zoom="images/large/tuile-set.jpg" aria-label="튀일 세트 사진 크게 보기">
               <img src="images/menu-tuile.jpg" alt="리본으로 포장한 튀일 선물 상자" width="600" height="800" loading="lazy">
               <span class="menu-card__tag">선물 추천</span>
-            </div>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+            </button>
             <div class="menu-card__body">
               <div class="menu-card__head">
                 <h3 class="menu-card__name">튀일 세트 <small>(5개입)</small></h3>
@@ -373,7 +376,7 @@
           <li class="gift-card">
             <button type="button" class="gift-card__photo" data-zoom="images/large/tuile-set.jpg" aria-label="튀일 선물세트 사진 크게 보기">
               <img src="images/menu-tuile.jpg" alt="리본으로 포장한 튀일 선물 상자" width="600" height="800" loading="lazy">
-              <span class="gift-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
             </button>
             <div class="gift-card__body">
               <h3 class="gift-card__name">튀일 선물세트</h3>
@@ -391,7 +394,7 @@
           <li class="gift-card">
             <button type="button" class="gift-card__photo" data-zoom="images/large/roll-gift-set.jpg" aria-label="롤케이크 선물세트 사진 크게 보기">
               <img src="images/menu/roll-gift-set.jpg" alt="롤케이크 두 개가 담긴 리본 선물 상자" width="480" height="480" loading="lazy">
-              <span class="gift-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
             </button>
             <div class="gift-card__body">
               <h3 class="gift-card__name">롤케이크 선물세트</h3>
@@ -408,7 +411,7 @@
           <li class="gift-card">
             <button type="button" class="gift-card__photo" data-zoom="images/large/financier-set.jpg" aria-label="휘낭시에 선물세트 사진 크게 보기">
               <img src="images/menu/financier-set.jpg" alt="리본으로 포장한 휘낭시에 선물 상자" width="480" height="480" loading="lazy">
-              <span class="gift-card__zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
+              <span class="photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5M11 8.5v5M8.5 11h5"></path></svg></span>
             </button>
             <div class="gift-card__body">
               <h3 class="gift-card__name">휘낭시에 선물세트</h3>
@@ -662,8 +665,8 @@
     <img class="lightbox__img" data-lightbox-img alt="">
   </dialog>
 
-  <script src="js/schedule.js?v=20260916e"></script>
-  <script src="js/order-message.js?v=20260916e"></script>
-  <script src="js/main.js?v=20260916e"></script>
+  <script src="js/schedule.js?v=20260916f"></script>
+  <script src="js/order-message.js?v=20260916f"></script>
+  <script src="js/main.js?v=20260916f"></script>
 </body>
 </html>
