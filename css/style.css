@@ -761,23 +761,27 @@ a, button, input, label, select, summary, textarea, .stepper { touch-action: man
 }
 
 .bread-list { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: flex-start; gap: 6px; }
+/* 빵 이름은 읽는 정보라 손글씨 대신 고딕체 + 흰 배경 (손글씨는 시간·문구에 남김) */
 .bread-list li {
-  padding: 2px 11px;
-  border: 2px solid var(--line);
+  padding: 5px 13px;
+  border: 2px solid rgba(165, 75, 54, 0.45);
   border-radius: 999px;
-  background: var(--paper);
-  font-family: var(--font-hand);
+  background: #FFFFFF;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
+  font-size: 0.98rem;
   line-height: 1.35;
   color: var(--ink);
 }
 .bread-list li.is-signature { border-color: var(--crust); background: var(--crust); color: var(--cream); }
-.bread-list li.is-signature small { margin-left: 2px; font-size: 0.85rem; }
+.bread-list li.is-signature small { margin-left: 3px; font-size: 0.85rem; }
 
 .timeline__row.is-now::before { animation: pulse 1.8s ease-in-out infinite; }
-.timeline__row.is-now .bread-list li:not(.is-signature) { border-color: var(--terracotta); background: #fff; }
+/* 기본 라벨이 이미 흰 배경이라, 지금 나오는 줄은 테두리를 진하게 + 살짝 그림자로 구분 */
+.timeline__row.is-now .bread-list li:not(.is-signature) {
+  border-color: var(--crust);
+  box-shadow: 0 2px 0 rgba(165, 75, 54, 0.18);
+}
 .timeline__row.is-next::before { border: 5px solid var(--terracotta); background: var(--cream); }
 
 /* 방금 나온 빵 위로 모락모락 김 (JS가 행마다 .steam 삽입) */

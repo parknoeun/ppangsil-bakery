@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>빵 이름 라벨 — 가독성 후보 비교</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* 미리보기 전용 (사이트에는 적용되지 않음) */
+    .preview-head { padding: 24px 20px 4px; text-align: center; }
+    .preview-head h1 { font-family: var(--font-title); font-weight: 400; font-size: 1.6rem; color: var(--crust); }
+    .preview-label {
+      max-width: 1080px; margin: 34px auto 0; padding: 10px 20px;
+      font-family: var(--font-title); font-size: 1.15rem; color: var(--cream); background: var(--ink);
+    }
+    .preview-note { max-width: 1080px; margin: 0 auto; padding: 10px 20px 0; font-size: 0.92rem; color: var(--ink); }
+
+    /* 후보 ㄱ: 흰 배경 + 진한 테두리 + 손글씨 그대로, 조금 크게 */
+    .v1 .bread-list li:not(.is-signature) {
+      padding: 4px 13px;
+      border-color: rgba(165, 75, 54, 0.55);
+      background: #FFFFFF;
+      font-size: 1.25rem;
+      letter-spacing: 0;
+    }
+
+    /* 후보 ㄴ: 고딕체로 (본문 글꼴) + 흰 배경 */
+    .v2 .bread-list li:not(.is-signature) {
+      padding: 5px 13px;
+      border-color: rgba(165, 75, 54, 0.45);
+      background: #FFFFFF;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0;
+    }
+
+    /* 후보 ㄷ: 테두리 없이 색 배경 (칩) */
+    .v3 .bread-list li:not(.is-signature) {
+      padding: 5px 14px;
+      border: 0;
+      background: rgba(192, 96, 60, 0.13);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+    .v2 .bread-list li.is-signature, .v3 .bread-list li.is-signature { font-family: var(--font-body); font-weight: 700; font-size: 0.98rem; letter-spacing: 0; }
+  </style>
+</head>
+<body>
+
+<div class="preview-head">
+  <h1>빵 이름 라벨 — 가독성 후보</h1>
+</div>
+
+<p class="preview-label">지금 — 손글씨 18px, 연한 배경·테두리</p>
+<section class="section section--terracotta">
+  <div class="container"><div class="timetable"><ol class="timeline">
+    <li class="timeline__row is-now">
+      <div class="timeline__time"><span class="timeline__clock">8:00</span><span class="timeline__until">~ 9:00</span><span class="timeline__badge">지금 나오는 중</span></div>
+      <ul class="bread-list"><li>크림치즈모찌</li><li>로띠번</li><li>갈릭치즈토스트</li><li>에그타르트</li><li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐 소보로빵</li><li>크로크무슈</li><li>소세지피자빵</li><li>밤식빵</li><li>모닝빵</li><li>감자모닝빵</li><li>초코모닝빵</li><li>초코식빵</li><li>팥빵</li></ul>
+    </li>
+    <li class="timeline__row">
+      <div class="timeline__time"><span class="timeline__clock">11:00 ~</span></div>
+      <ul class="bread-list"><li class="is-signature">프랑스시골빵 <small>시그니처</small></li><li>바질토마토시골빵</li></ul>
+    </li>
+  </ol></div></div>
+</section>
+
+<p class="preview-label">후보 ㄱ — 손글씨 유지, 흰 배경 + 진한 테두리 + 20px</p>
+<p class="preview-note">지금 느낌을 가장 살리면서 또렷하게. 손글씨라 글자 획은 여전히 얇아요.</p>
+<section class="section section--terracotta v1">
+  <div class="container"><div class="timetable"><ol class="timeline">
+    <li class="timeline__row is-now">
+      <div class="timeline__time"><span class="timeline__clock">8:00</span><span class="timeline__until">~ 9:00</span><span class="timeline__badge">지금 나오는 중</span></div>
+      <ul class="bread-list"><li>크림치즈모찌</li><li>로띠번</li><li>갈릭치즈토스트</li><li>에그타르트</li><li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐 소보로빵</li><li>크로크무슈</li><li>소세지피자빵</li><li>밤식빵</li><li>모닝빵</li><li>감자모닝빵</li><li>초코모닝빵</li><li>초코식빵</li><li>팥빵</li></ul>
+    </li>
+    <li class="timeline__row">
+      <div class="timeline__time"><span class="timeline__clock">11:00 ~</span></div>
+      <ul class="bread-list"><li class="is-signature">프랑스시골빵 <small>시그니처</small></li><li>바질토마토시골빵</li></ul>
+    </li>
+  </ol></div></div>
+</section>
+
+<p class="preview-label">후보 ㄴ — 고딕체 + 흰 배경</p>
+<p class="preview-note">빵 이름만 또박또박한 글씨로. 가장 잘 읽히고, 손글씨는 시간·문구에만 남아요.</p>
+<section class="section section--terracotta v2">
+  <div class="container"><div class="timetable"><ol class="timeline">
+    <li class="timeline__row is-now">
+      <div class="timeline__time"><span class="timeline__clock">8:00</span><span class="timeline__until">~ 9:00</span><span class="timeline__badge">지금 나오는 중</span></div>
+      <ul class="bread-list"><li>크림치즈모찌</li><li>로띠번</li><li>갈릭치즈토스트</li><li>에그타르트</li><li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐 소보로빵</li><li>크로크무슈</li><li>소세지피자빵</li><li>밤식빵</li><li>모닝빵</li><li>감자모닝빵</li><li>초코모닝빵</li><li>초코식빵</li><li>팥빵</li></ul>
+    </li>
+    <li class="timeline__row">
+      <div class="timeline__time"><span class="timeline__clock">11:00 ~</span></div>
+      <ul class="bread-list"><li class="is-signature">프랑스시골빵 <small>시그니처</small></li><li>바질토마토시골빵</li></ul>
+    </li>
+  </ol></div></div>
+</section>
+
+<p class="preview-label">후보 ㄷ — 고딕체 + 테두리 없이 색 배경</p>
+<p class="preview-note">테두리를 없애고 옅은 테라코타 배경으로. 선이 줄어 화면이 차분해져요.</p>
+<section class="section section--terracotta v3">
+  <div class="container"><div class="timetable"><ol class="timeline">
+    <li class="timeline__row is-now">
+      <div class="timeline__time"><span class="timeline__clock">8:00</span><span class="timeline__until">~ 9:00</span><span class="timeline__badge">지금 나오는 중</span></div>
+      <ul class="bread-list"><li>크림치즈모찌</li><li>로띠번</li><li>갈릭치즈토스트</li><li>에그타르트</li><li>애플파이</li><li>까눌레</li><li>프레첼</li><li>라우겐 소보로빵</li><li>크로크무슈</li><li>소세지피자빵</li><li>밤식빵</li><li>모닝빵</li><li>감자모닝빵</li><li>초코모닝빵</li><li>초코식빵</li><li>팥빵</li></ul>
+    </li>
+    <li class="timeline__row">
+      <div class="timeline__time"><span class="timeline__clock">11:00 ~</span></div>
+      <ul class="bread-list"><li class="is-signature">프랑스시골빵 <small>시그니처</small></li><li>바질토마토시골빵</li></ul>
+    </li>
+  </ol></div></div>
+</section>
+
+</body>
+</html>
