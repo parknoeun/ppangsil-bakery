@@ -514,8 +514,12 @@
               <a class="btn btn--ghost" href="https://map.kakao.com/link/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EA%B4%91%EC%A3%BC%EC%8B%9C%20%ED%83%9C%EB%B4%89%EB%A1%9C%20145-3" target="_blank" rel="noopener">카카오맵</a>
             </div>
           </div>
+          <!-- 카카오맵: 화면에 들어올 때만 불러옴 (js/main.js setupKakaoMap). 앱키는 공개용 자바스크립트 키 -->
           <div class="location__map">
-            <iframe title="빵실빵실 베이커리 위치 지도" src="https://maps.google.com/maps?q=%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EA%B4%91%EC%A3%BC%EC%8B%9C%20%ED%83%9C%EB%B4%89%EB%A1%9C%20145-3&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="location__map-canvas" data-kakao-map
+                 data-key="0618fc2070677370175a528726c41b16"
+                 data-lat="37.3809768" data-lng="127.2311506"></div>
+            <p class="location__map-fallback" data-map-fallback>지도는 아래 <strong>카카오맵</strong> 버튼으로 열어주세요</p>
           </div>
         </div>
       </div>

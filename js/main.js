@@ -163,6 +163,65 @@
     });
   }
 
+  // 카카오맵: 지도 칸이 화면에 들어올 때만 SDK를 불러온다 (사용량 아끼기)
+  // 실패하면(서비스 꺼짐·도메인 미등록·네트워크) 안내 문구를 그대로 두고 카카오맵 버튼으로 보냄
+  function setupKakaoMap() {
+    var canvas = document.querySelector('[data-kakao-map]');
+    if (!canvas) return;
+    var fallback = document.querySelector('[data-map-fallback]');
+    var key = canvas.getAttribute('data-key');
+    var lat = Number(canvas.getAttribute('data-lat'));
+    var lng = Number(canvas.getAttribute('data-lng'));
+    var started = false;
+
+    function failed() {
+      if (fallback) fallback.textContent = '지도를 불러오지 못했어요. 아래 카카오맵 버튼으로 열어주세요';
+    }
+
+    function draw() {
+      var kakao = window.kakao;
+      var center = new kakao.maps.LatLng(lat, lng);
+      var map = new kakao.maps.Map(canvas, { center: center, level: 3 });
+      map.setDraggable(false);  // 손가락으로 지도를 끌다가 페이지 스크롤이 막히지 않게
+      map.setZoomable(false);
+      new kakao.maps.Marker({ map: map, position: center });
+      new kakao.maps.CustomOverlay({
+        map: map,
+        position: center,
+        yAnchor: 2.3,
+        content: '<div class="map-label">빵실빵실 베이커리</div>'
+      });
+      if (fallback) fallback.hidden = true;
+    }
+
+    function load() {
+      if (started) return;
+      started = true;
+      var script = document.createElement('script');
+      script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + key + '&autoload=false';
+      script.onload = function () {
+        if (!window.kakao || !window.kakao.maps) return failed();
+        window.kakao.maps.load(function () {
+          try { draw(); } catch (e) { failed(); }
+        });
+      };
+      script.onerror = failed;
+      document.head.appendChild(script);
+      setTimeout(function () { if (fallback && !fallback.hidden && !canvas.firstChild) failed(); }, 8000);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        load();
+      }, { rootMargin: '300px' });
+      io.observe(canvas);
+    } else {
+      load();
+    }
+  }
+
   // ① 단체주문 문의 문구 만들기
   function setupOrderHelper() {
     var helper = document.querySelector('[data-order-helper]');
@@ -485,6 +544,7 @@
   setInterval(render, 60 * 1000);
   setupCopyAddress();
   setupInstagramAppLinks();
+  setupKakaoMap();
   setupOrderHelper();
   setupShare();
   setupBuddy();
